@@ -148,6 +148,9 @@ body .container {
   display: none;
   transform: translateX(-19px);
 }
+.spotify-option #pause {
+  display: none;
+}
 
 main {
   position: absolute;

@@ -60,6 +60,17 @@ function volumeOff() {
   volumeOFF.style.display = "none";
 }
 
+const btn_pause = document.getElementById("pause");
+const btn_play = document.getElementById("play");
+function pause() {
+  btn_play.style.display = "block";
+  btn_pause.style.display = "none";
+}
+function resume() {
+  btn_pause.style.display = "block";
+  btn_play.style.display = "none";
+}
+
 const main = document.querySelector("main");
 let statusCount = 2;
 dataStatusFunc();
