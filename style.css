@@ -84,7 +84,6 @@ body .container {
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: -2;
 }
 
 .bar-bottom {
@@ -328,7 +327,6 @@ main[data-status="1"] .shape-12 {
 }
 
 .touch_canvas {
-  z-index: 1;
   position: absolute;
   width: 100%;
   height: 100%;
