@@ -106,5 +106,6 @@ function dataStatusFunc() {
     shape.setAttribute("class", `shape-${i}`);
     main.appendChild(shape);
   }
+}
 
 slides()
