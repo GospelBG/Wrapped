@@ -1,3 +1,8 @@
+html {
+  overflow: hidden;
+  font-family: Metropolis;
+}
+
 /* Box sizing rules */
 *,
 *::before,
@@ -102,7 +107,6 @@ body .container {
   justify-content: space-between;
 }
 .spotify-nav p {
-  font-family: "Signika", sans-serif;
   text-decoration: none;
   color: white;
   font-size: 20px;
