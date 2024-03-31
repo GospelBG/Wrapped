@@ -1,13 +1,72 @@
-var sleepSetTimeout_ctrl;
-function sleep(ms) {
-  clearInterval(sleepSetTimeout_ctrl);
-  return new Promise(resolve => sleepSetTimeout_ctrl = setTimeout(resolve, ms));
+let box; 
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  box = document.querySelector('#touch');
+  box.addEventListener('click', chooseSide);
+});
+
+function chooseSide(e) {
+  const clientX = e.clientX;
+  const clientWidth = e.view.innerWidth
+
+  if (clientX < clientWidth / 2) {
+    console.log('left')
+    slide_change = -1
+    currentSleep.cancel();
+  } else {
+    console.log('right')
+    slide_change = 1
+    currentSleep.cancel();
+  }
+}
+
+class Sleep {
+  constructor() {
+    this.timeout = null;
+    this.remaining = 0;
+    this.promise = null;
+    this.resolve = null;
+    this.reject = null;
+    this.startTime = null;
+  }
+
+  start(ms) {
+    this.remaining = ms;
+    this.startTime = new Date();
+    this.promise = new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+      this.timeout = setTimeout(resolve, ms);
+    });
+    return this.promise;
+  }
+
+  pause() {
+    clearTimeout(this.timeout);
+    this.remaining -= new Date() - this.startTime;
+    this.timeout = null;
+  }
+
+  resume() {
+    if (this.timeout) {
+      throw new Error('Sleep is not paused.');
+    }
+    this.startTime = new Date();
+    this.timeout = setTimeout(this.resolve, this.remaining);
+    return this.promise;
+  }
+
+  cancel() {
+    clearTimeout(this.timeout);
+    this.timeout = null;
+    this.resolve();
+  }
 }
 
 const slide_data = {
   1: {
     text: "$ANIMATION",
-    time: 8
+    time: 3
   },
   2: {
     text: "1",
@@ -65,26 +124,30 @@ const btn_play = document.getElementById("play");
 function pause() {
   btn_play.style.display = "block";
   btn_pause.style.display = "none";
+  currentSleep.pause();
 }
 function resume() {
   btn_pause.style.display = "block";
   btn_play.style.display = "none";
+  currentSleep.resume();
 }
 
 const main = document.querySelector("main");
 let statusCount = 2;
 dataStatusFunc();
 
+
+var slide_change = 1;
+let currentSleep;
+
 async function slides() {
   var header = document.querySelector('#header');
   var sub = document.querySelector('#subtitle');
 
-  for (i = 1; i <= Object.keys(slide_data).length; i++) {
+  for (i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
     var slide = slide_data[i]
-    if (slide.text == "$ANIMATION") {
-      await sleep(slide.time * 1000)
-      continue
-    } else {
+    slide_change = 1
+    if (slide.text != "$ANIMATION") {
       main.style.fontSize = "4rem";
       main.style.color = "white";
       header.innerHTML = slide.text;
@@ -101,12 +164,13 @@ async function slides() {
       main.style.background = `rgb(${i * 5}, ${i * 5}, ${
         i * 5
       })`;
-    
-      /*dataStatusFunc();*/
-      console.log(i)
-      await sleep(slide.time * 1000)
-      console.log("A")
     }
+  
+    /*dataStatusFunc();*/
+    console.log(i)
+    currentSleep = new Sleep();
+    await currentSleep.start(slide.time * 1000)
+    console.log("A")
   }
 
 }
