@@ -147,7 +147,7 @@ body .container {
   display: none;
   transform: translateX(-19px);
 }
-.spotify-option #pause {
+.spotify-option #play {
   display: none;
 }
 
