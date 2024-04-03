@@ -1,68 +1,3 @@
-let box; 
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  box = document.querySelector('#touch');
-  box.addEventListener('click', chooseSide);
-});
-
-function chooseSide(e) {
-  const clientX = e.clientX;
-  const clientWidth = e.view.innerWidth
-
-  if (clientX < clientWidth / 2) {
-    console.log('left')
-    slide_change = -1
-    currentSleep.cancel();
-  } else {
-    console.log('right')
-    slide_change = 1
-    currentSleep.cancel();
-  }
-}
-
-class Sleep {
-  constructor() {
-    this.timeout = null;
-    this.remaining = 0;
-    this.promise = null;
-    this.resolve = null;
-    this.reject = null;
-    this.startTime = null;
-  }
-
-  start(ms) {
-    this.remaining = ms;
-    this.startTime = new Date();
-    this.promise = new Promise((resolve, reject) => {
-      this.resolve = resolve;
-      this.reject = reject;
-      this.timeout = setTimeout(resolve, ms);
-    });
-    return this.promise;
-  }
-
-  pause() {
-    clearTimeout(this.timeout);
-    this.remaining -= new Date() - this.startTime;
-    this.timeout = null;
-  }
-
-  resume() {
-    if (this.timeout) {
-      throw new Error('Sleep is not paused.');
-    }
-    this.startTime = new Date();
-    this.timeout = setTimeout(this.resolve, this.remaining);
-    return this.promise;
-  }
-
-  cancel() {
-    clearTimeout(this.timeout);
-    this.timeout = null;
-    this.resolve();
-  }
-}
-
 const slide_data = {
   1: {
     text: "$ANIMATION",
@@ -104,10 +39,144 @@ const slide_data = {
   10: {
     text: "9",
     time: 8
+  },
+  11: {
+    text: "4",
+    time: 8
+  },
+  12: {
+    text: "5",
+    time: 8
+  },
+  13: {
+    text: "6",
+    time: 8
+  },
+  14: {
+    text: "7",
+    time: 8
+  },
+  15: {
+    text: "8",
+    time: 8
+  },
+  16: {
+    text: "9",
+    time: 8
   }
 
 }
 
+bar_container = document.querySelector('.status-bar-container')
+for (i = 1; i <= Object.keys(slide_data).length; i++) {
+  var bar = document.createElement('div');
+  bar.classList.add('status-bar')
+  bar.style.width = `${100/Object.keys(slide_data).length}%`
+  
+  var childDiv = document.createElement('div');
+  childDiv.classList.add('status-bar-progress');
+  bar.appendChild(childDiv);
+  childDiv.id = "bar_"+i;
+  bar_container.appendChild(bar);
+}
+
+let box; 
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  box = document.querySelector('#touch');
+  box.addEventListener('click', chooseSide);
+});
+
+function chooseSide(e) {
+  const clientX = e.clientX;
+  const clientWidth = e.view.innerWidth
+
+  if (clientX < clientWidth / 2) {
+    console.log('left')
+    slide_change = -1
+    currentSleep.cancel();
+  } else {
+    console.log('right')
+    slide_change = 1
+    currentSleep.cancel();
+  }
+}
+
+class Sleep {
+  constructor() {
+    this.timeout = null;
+    this.startTime = null;
+    this.remaining = null;
+    this.resolve = null;
+    this.increaseWidthInterval = null;
+    this.width = 0;
+    this.element = null;
+    this.duration = null;
+    this.interval = null;
+    this.widthIncrement = null;
+  }
+
+  start(time, element) {
+    this.remaining = time;
+    this.element = element;
+    this.duration = time;
+    this.interval = 100;
+    this.widthIncrement = 100 / (this.duration / this.interval);
+
+    return new Promise((resolve) => {
+      this.resolve = resolve;
+      this.startTime = new Date();
+      this.timeout = setTimeout(this.resolve, this.remaining);
+      this.increaseWidthInterval = setInterval(() => {
+        this.width += this.widthIncrement;
+        if (parseFloat(this.width) > 100) {
+          this.width = `100%`;
+        }
+        this.element.style.width = `${this.width}%`;
+      }, this.interval);
+    });
+  }
+
+  pause() {
+    clearTimeout(this.timeout);
+    this.remaining -= new Date() - this.startTime;
+    this.timeout = null;
+    clearInterval(this.increaseWidthInterval);
+    this.increaseWidthInterval = null;
+  }
+
+  resume() {
+    if (this.timeout) {
+      throw new Error('Sleep is not paused.');
+    }
+    this.startTime = new Date();
+    this.timeout = setTimeout(this.resolve, this.remaining);
+    this.increaseWidthInterval = setInterval(() => {
+      this.width += this.widthIncrement;
+      if (this.width > this.maxWidth) {
+        this.width = this.maxWidth;
+      }
+      this.element.style.width = `${this.width}%`;
+    }, this.interval);
+    return this.promise;
+  }
+
+  cancel() {
+    clearTimeout(this.timeout);
+    this.timeout = null;
+    clearInterval(this.increaseWidthInterval);
+    this.increaseWidthInterval = null;
+    this.width = 0;
+
+    if (slide_change == 1) {
+      this.element.style.width = `100%`;
+    } else {
+      this.element.style.width = `0%`;
+    }
+
+    this.resolve();
+  }
+}
 const volumeON = document.getElementById("volume-on");
 const volumeOFF = document.getElementById("volume-off");
 function volumeOn() {
@@ -168,11 +237,13 @@ async function slides() {
   
     /*dataStatusFunc();*/
     console.log(i)
+
+    bar = document.querySelector(`#bar_${i}`);
+
     currentSleep = new Sleep();
-    await currentSleep.start(slide.time * 1000)
+    await currentSleep.start(slide.time * 1000, bar, bar.maxWidth)
     console.log("A")
   }
-
 }
 
 function dataStatusFunc() {
