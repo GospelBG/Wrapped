@@ -153,6 +153,7 @@ body .container {
 
 main {
   position: absolute;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   background: #6901b8;
@@ -162,14 +163,12 @@ main {
   align-items: center;
   overflow: hidden;
 }
-main > * {
-  position: absolute;
-}
 main[data-status="1"] {
   pointer-events: none;
   background: #070707;
 }
 main[data-status="1"] .shape-1 {
+  position: absolute;
   clip-path: polygon(50% 0, 45% 20%, 25% 0, 30% 25%, 0 0, 23% 32%, 0 25%, 20% 45%, 0 50%, 20% 55%, 0 75%, 23% 69%, 0 100%, 30% 76%, 25% 100%, 45% 80%, 49% 99%, 55% 80%, 75% 100%, 70% 78%, 100% 100%, 76% 69%, 100% 75%, 80% 55%, 100% 50%, 80% 45%, 100% 25%, 78% 33%, 100% 0, 70% 26%, 75% 0, 55% 20%);
   width: 70%;
   height: 40%;
@@ -333,9 +332,8 @@ main[data-status="1"] .shape-12 {
 }
 
 h2 {
-  font-size: 50%;
+  font-size: xxx-large;
   font-weight: bolder;
-  transform: translateY(-50px);
   text-align: center;
   margin: 5%;
   word-spacing: -0.075em;
@@ -343,20 +341,17 @@ h2 {
 
 h3 {
   font-size: x-large;
-
   font-weight: normal;
   vertical-align: bottom;
-  transform: translateY(50px);
   text-align: center;
 
-  margin: 10%;
+  margin: 5%;
 }
 
 .status-bar-container {
   display: flex;
   width: 95%;
   height: 0.15vh;
-  /*background-color: #afafaf;*/
   margin-left: auto;
   margin-right: auto;
   margin-top: 3%;
