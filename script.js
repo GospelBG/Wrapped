@@ -212,8 +212,13 @@ let currentSleep;
 async function slides() {
   var header = document.querySelector('#header');
   var sub = document.querySelector('#subtitle');
+  var img = document.getElementById("img");
 
   for (i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
+    if (i == 0) {
+      i = 1;
+    }
+
     var slide = slide_data[i]
     slide_change = 1
 
@@ -244,14 +249,19 @@ async function slides() {
       })`;
     }
   
-    /*dataStatusFunc();*/
     console.log(i)
-
     bar = document.querySelector(`#bar_${i}`);
 
     currentSleep = new Sleep();
     await currentSleep.start(slide.time * 1000, bar, bar.maxWidth)
-    console.log("A")
+
+    if (i == Object.keys(slide_data).length && slide_change == 1) {
+      for (let j = 1; j <= Object.keys(slide_data).length; j++) {
+        bar = document.getElementById(`bar_${j}`);
+        bar.style.width = `0%`;
+      }
+      i = 0;
+    }
   }
 }
 
