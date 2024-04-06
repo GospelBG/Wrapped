@@ -375,3 +375,11 @@ h3 {
   background-color: #ffffff;
   border-radius: 3px;
 }
+
+.cover_img {
+  width: 50%;
+}
+
+.cover_img_hidden {
+  display: none;
+}

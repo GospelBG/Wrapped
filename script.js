@@ -227,7 +227,12 @@ async function slides() {
         sub.innerHTML = ""
       }
 
-      /*main.innerHTML = slide.text*/
+      if (slide.img != null) {
+        img.src = slide.img;
+        img.className = "cover_img"
+      } else {
+        img.className = "cover_img_hidden"
+      }
     
       main.dataset.status = statusCount;
       main.style.background = `rgb(${i * 5}, ${i * 5}, ${
