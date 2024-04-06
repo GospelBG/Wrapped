@@ -216,6 +216,10 @@ async function slides() {
   for (i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
     var slide = slide_data[i]
     slide_change = 1
+
+    btn_pause.style.display = "block";
+    btn_play.style.display = "none";
+
     if (slide.text != "$ANIMATION") {
       main.style.fontSize = "4rem";
       main.style.color = "white";
