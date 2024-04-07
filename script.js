@@ -67,6 +67,8 @@ const slide_data = {
 
 }
 
+var bg = document.querySelector(".bg_video");
+
 bar_container = document.querySelector('.status-bar-container')
 for (i = 1; i <= Object.keys(slide_data).length; i++) {
   var bar = document.createElement('div');
@@ -143,12 +145,14 @@ class Sleep {
     this.timeout = null;
     clearInterval(this.increaseWidthInterval);
     this.increaseWidthInterval = null;
+    bg.pause();
   }
 
   resume() {
     if (this.timeout) {
       throw new Error('Sleep is not paused.');
     }
+    bg.play();
     this.startTime = new Date();
     this.timeout = setTimeout(this.resolve, this.remaining);
     this.increaseWidthInterval = setInterval(() => {
@@ -203,15 +207,13 @@ function resume() {
 
 const main = document.querySelector("main");
 let statusCount = 2;
-dataStatusFunc();
-
 
 var slide_change = 1;
 let currentSleep;
 
 async function slides() {
-  var header = document.querySelector('#header');
-  var sub = document.querySelector('#subtitle');
+  var header = document.getElementById('header');
+  var sub = document.getElementById('subtitle');
   var img = document.getElementById("img");
 
   for (i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
@@ -225,29 +227,34 @@ async function slides() {
     btn_pause.style.display = "block";
     btn_play.style.display = "none";
 
-    if (slide.text != "$ANIMATION") {
-      main.style.fontSize = "4rem";
-      main.style.color = "white";
-      header.innerHTML = slide.text;
+    main.style.fontSize = "4rem";
+    main.style.color = "white";
+    header.innerHTML = slide.text;
 
-      if (slide.sub != null) {
-        sub.innerHTML = slide.sub;
-      } else {
-        sub.innerHTML = ""
-      }
-
-      if (slide.img != null) {
-        img.src = slide.img;
-        img.className = "cover_img"
-      } else {
-        img.className = "cover_img_hidden"
-      }
-    
-      main.dataset.status = statusCount;
-      main.style.background = `rgb(${i * 5}, ${i * 5}, ${
-        i * 5
-      })`;
+    if (slide.bg != null) {
+      bg.style.display = "inherit";
+      bg.src = slide.bg;
+    } else {
+      bg.style.display = "none";
     }
+      
+    if (slide.sub != null) {
+      sub.innerHTML = slide.sub;
+    } else {
+      sub.innerHTML = ""
+    }
+
+    if (slide.img != null) {
+      img.src = slide.img;
+      img.className = "cover_img"
+    } else {
+      img.className = "cover_img_hidden"
+    }
+  
+    main.dataset.status = statusCount;
+    main.style.background = `rgb(${i * 5}, ${i * 5}, ${
+      i * 5
+    })`;
   
     console.log(i)
     bar = document.querySelector(`#bar_${i}`);
