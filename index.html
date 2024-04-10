@@ -35,19 +35,24 @@
       </div>
 
       <div class="spotify-option">
-        <button type="button">
-          <i class="fa-solid fa-pause" id="pause" onclick="currentSleep.pause()"></i>
-          <i class="fa-solid fa-play" id="play" onclick="currentSleep.resume()"></i>
-        </button>
-        <button type="button" style="scale: 85%;">
-          <i class="fa-solid fa-volume-high" id="volume-on" onclick="volumeOn()"></i>
-          <i class="fa-solid fa-volume-off" id="volume-off" onclick="volumeOff()"></i>
-        </button>
-        <button type="button" class="close" style="scale: 110%;" onclick="closeSelf()">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+        <div class="button-bg">
+          <button type="button" style="scale: 95%;">
+            <i class="fa-solid fa-pause" id="pause" onclick="currentSleep.pause()"></i>
+            <i class="fa-solid fa-play" id="play" onclick="currentSleep.resume()"></i>
+          </button>
+        </div>
+        <div class="button-bg">
+          <button type="button" style="scale: 85%;">
+            <i class="fa-solid fa-volume-high" id="volume-on" onclick="volumeOn()"></i>
+            <i class="fa-solid fa-volume-off" id="volume-off" onclick="volumeOff()"></i>
+          </button>
+        </div>
+        <div class="button-bg">
+          <button type="button" class="close" style="scale: 110%;" onclick="closeSelf()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
       </div>
-
     </div>
 
     <main data-status="1">
