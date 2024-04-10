@@ -263,6 +263,7 @@ async function slides() {
     await currentSleep.start(slide.time * 1000, bar, bar.maxWidth)
 
     if (i == Object.keys(slide_data).length && slide_change == 1) {
+      currentSleep.pause()
       for (let j = 1; j <= Object.keys(slide_data).length; j++) {
         bar = document.getElementById(`bar_${j}`);
         bar.style.width = `0%`;
