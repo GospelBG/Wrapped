@@ -390,6 +390,7 @@ h3 {
 
 .bg_video {
   position: absolute;
+  display: none;
   top: 0;
   left: 0;
   width: 100%;

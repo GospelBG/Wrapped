@@ -1,7 +1,5 @@
 let slide_data;
-  
-var bg = document.querySelector(".bg_video");
-
+var bg;
 let box; 
 
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -65,6 +63,7 @@ class Sleep {
     this.timeout = null;
     clearInterval(this.increaseWidthInterval);
     this.increaseWidthInterval = null;
+
     bg.pause();
   }
 
@@ -82,6 +81,7 @@ class Sleep {
       }
       this.element.style.width = `${this.width}%`;
     }, this.interval);
+    
     return this.promise;
   }
 
@@ -97,6 +97,8 @@ class Sleep {
     } else {
       this.element.style.width = `0%`;
     }
+
+    bg.style.display = "none";
 
     this.resolve();
   }
@@ -125,6 +127,10 @@ function resume() {
   currentSleep.resume();
 }
 
+function closeSelf() {
+  window.close();
+}
+
 const main = document.querySelector("main");
 let statusCount = 2;
 
@@ -141,6 +147,10 @@ async function slides() {
       i = 1;
     }
 
+    if (bg != null) {
+      bg.style.display = "none"; // Reset bg
+    }
+
     var slide = slide_data[i]
     slide_change = 1
 
@@ -152,8 +162,10 @@ async function slides() {
     header.innerHTML = slide.text;
 
     if (slide.bg != null) {
+      console.log("bg_"+slide.bg)
+      bg = document.getElementsByClassName("bg_"+slide.bg)[0];
       bg.style.display = "inherit";
-      bg.src = slide.bg;
+      bg.play();
     } else {
       bg.style.display = "none";
     }
@@ -200,7 +212,7 @@ function dataStatusFunc() {
     main.appendChild(shape);
   }
 }
-
+  
 fetch('./public/slides.json')
   .then(response => response.json())
   .then(data => {
