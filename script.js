@@ -1,86 +1,6 @@
-const slide_data = {
-  1: {
-    text: "$ANIMATION",
-    time: 3
-  },
-  2: {
-    text: "1",
-    time: 1
-  },
-  3: {
-    text: "Saluda a tu artista top, Bizarrap", // Test Placeholder
-    sub: "Estás entre el <b>5%</b> de los fans más fieles y has disfrutado de <b>290</b> minutos en su compañía.",
-    time: 99999999999999999
-  },
-  4: {
-    text: "3",
-    time: 8
-  },
-  5: {
-    text: "4",
-    time: 8
-  },
-  6: {
-    text: "5",
-    time: 8
-  },
-  7: {
-    text: "6",
-    time: 8
-  },
-  8: {
-    text: "7",
-    time: 8
-  },
-  9: {
-    text: "8",
-    time: 8
-  },
-  10: {
-    text: "9",
-    time: 8
-  },
-  11: {
-    text: "4",
-    time: 8
-  },
-  12: {
-    text: "5",
-    time: 8
-  },
-  13: {
-    text: "6",
-    time: 8
-  },
-  14: {
-    text: "7",
-    time: 8
-  },
-  15: {
-    text: "8",
-    time: 8
-  },
-  16: {
-    text: "9",
-    time: 8
-  }
-
-}
-
-var bg = document.querySelector(".bg_video");
-
-bar_container = document.querySelector('.status-bar-container')
-for (i = 1; i <= Object.keys(slide_data).length; i++) {
-  var bar = document.createElement('div');
-  bar.classList.add('status-bar')
-  bar.style.width = `${100/Object.keys(slide_data).length}%`
+let slide_data;
   
-  var childDiv = document.createElement('div');
-  childDiv.classList.add('status-bar-progress');
-  bar.appendChild(childDiv);
-  childDiv.id = "bar_"+i;
-  bar_container.appendChild(bar);
-}
+var bg = document.querySelector(".bg_video");
 
 let box; 
 
@@ -281,4 +201,24 @@ function dataStatusFunc() {
   }
 }
 
-slides()
+fetch('./public/slides.json')
+  .then(response => response.json())
+  .then(data => {
+    slide_data = data;
+
+    bar_container = document.querySelector('.status-bar-container')
+    for (i = 1; i <= Object.keys(slide_data).length; i++) {
+      var bar = document.createElement('div');
+      bar.classList.add('status-bar')
+      bar.style.width = `${100/Object.keys(slide_data).length}%`
+      
+      var childDiv = document.createElement('div');
+      childDiv.classList.add('status-bar-progress');
+      bar.appendChild(childDiv);
+      childDiv.id = "bar_"+i;
+      bar_container.appendChild(bar);
+    }
+
+    slides();
+  })
+  .catch(error => console.error('Error:', error));
