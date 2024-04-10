@@ -78,7 +78,7 @@ class Sleep {
 
   resume() {
     if (this.timeout) {
-      throw new Error('Sleep is not paused.');
+      return;
     }
     btn_pause.style.display = "block";
     btn_play.style.display = "none";
@@ -164,12 +164,9 @@ async function slides() {
     header.innerHTML = slide.text;
 
     if (slide.bg != null) {
-      console.log("bg_"+slide.bg)
       bg = document.getElementsByClassName("bg_"+slide.bg)[0];
       bg.style.display = "inherit";
       bg.play();
-    } else {
-      bg.style.display = "none";
     }
       
     if (slide.sub != null) {
