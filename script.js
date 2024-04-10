@@ -7,7 +7,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
   box.addEventListener('click', chooseSide);
 });
 
+var shouldIgnoreTap = false;
+
 function chooseSide(e) {
+  if (shouldIgnoreTap) {
+    shouldIgnoreTap = false;
+    return;
+  }
   const clientX = e.clientX;
   const clientWidth = e.view.innerWidth
 
@@ -64,6 +70,9 @@ class Sleep {
     clearInterval(this.increaseWidthInterval);
     this.increaseWidthInterval = null;
 
+    btn_play.style.display = "block";
+    btn_pause.style.display = "none";
+
     bg.pause();
   }
 
@@ -71,6 +80,9 @@ class Sleep {
     if (this.timeout) {
       throw new Error('Sleep is not paused.');
     }
+    btn_pause.style.display = "block";
+    btn_play.style.display = "none";
+
     bg.play();
     this.startTime = new Date();
     this.timeout = setTimeout(this.resolve, this.remaining);
@@ -116,16 +128,6 @@ function volumeOff() {
 
 const btn_pause = document.getElementById("pause");
 const btn_play = document.getElementById("play");
-function pause() {
-  btn_play.style.display = "block";
-  btn_pause.style.display = "none";
-  currentSleep.pause();
-}
-function resume() {
-  btn_pause.style.display = "block";
-  btn_play.style.display = "none";
-  currentSleep.resume();
-}
 
 function closeSelf() {
   window.close();
@@ -212,6 +214,14 @@ function dataStatusFunc() {
     main.appendChild(shape);
   }
 }
+
+document.getElementsByClassName('container')[0].addEventListener('long-press', (e) => {
+  shouldIgnoreTap = true;
+  console.log(e.target);
+  currentSleep.pause();
+});
+
+
   
 fetch('./public/slides.json')
   .then(response => response.json())
