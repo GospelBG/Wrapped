@@ -1,2 +1,26 @@
 {
+    "1": {
+      "text": "",
+      "bg": "Intro",
+      "time": 8
+    },
+    
+    "2": {
+      "text": "Hi!",
+      "sub": "Welcome to your Wrapped!<br>Made by GospelBG",
+      "bg": "Title3",
+      "time": 10
+    }, 
+    "3": {
+      "text": "Title",
+      "sub": "This is a test slide. You can go to the next or previus slides by tapping on the sides of the screen.",
+      "bg": "Night",
+      "time": 10
+    },
+    "4": {
+      "text": "Try these features!",
+      "sub": "You can pause the slide py tapping on the pause icon on the top-left corner or by long pressing the screen.",
+      "bg": "Title2",
+      "time": 10
+    }
 }
