@@ -208,8 +208,10 @@ async function slides() {
       
     if (slide.sub != null) {
       sub.innerHTML = slide.sub;
+      sub.style.position = ''
     } else {
       sub.innerHTML = ""
+      sub.style.position = 'absolute'
     }
 
     if (slide.img != null) {
