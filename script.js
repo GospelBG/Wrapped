@@ -44,7 +44,7 @@ class Sleep {
     this.widthIncrement = null;
   }
 
-  start(time, element) {
+  start(time, element, hasAnimOut = true) {
     this.remaining = time;
     this.element = element;
     this.duration = time;
@@ -57,10 +57,27 @@ class Sleep {
       this.timeout = setTimeout(this.resolve, this.remaining);
       this.increaseWidthInterval = setInterval(() => {
         this.width += this.widthIncrement;
-        if (parseFloat(this.width) > 100) {
-          this.width = `100%`;
+        this.remaining -= this.interval;
+
+        if (hasAnimOut && this.remaining <= 500 && !isAnimPlaying) {
+          anime({
+            ...animations["normal_out"],
+            
+            begin: function() {
+              isAnimPlaying = true;
+            },
+            complete: function() {
+              isAnimPlaying = false;
+            }
+          }).play()
+          isAnimPlaying = true;
         }
-        this.element.style.width = `${this.width}%`;
+        if (parseFloat(this.width) >= 100) {
+          this.width = `100%`;
+          clearInterval(this.increaseWidthInterval)
+        } else {
+          this.element.style.width = `${this.width}%`;
+        }
       }, this.interval);
     });
   }
