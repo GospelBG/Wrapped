@@ -1,3 +1,5 @@
+import { animations } from "./public/animations.js";
+
 let slide_data;
 var bg;
 let box; 
@@ -20,11 +22,11 @@ function chooseSide(e) {
   if (clientX < clientWidth / 2) {
     console.log('left')
     slide_change = -1
-    currentSleep.cancel();
+    window.currentSleep.cancel();
   } else {
     console.log('right')
     slide_change = 1
-    currentSleep.cancel();
+    window.currentSleep.cancel();
   }
 }
 
@@ -72,8 +74,10 @@ class Sleep {
 
     btn_play.style.display = "block";
     btn_pause.style.display = "none";
-
+    
     bg.pause();
+
+    if (isAnimPlaying) currentAnim.pause();
   }
 
   resume() {
@@ -93,6 +97,8 @@ class Sleep {
       }
       this.element.style.width = `${this.width}%`;
     }, this.interval);
+
+    if (isAnimPlaying) currentAnim.play();
     
     return this.promise;
   }
@@ -137,14 +143,17 @@ const main = document.querySelector("main");
 let statusCount = 2;
 
 var slide_change = 1;
-let currentSleep;
+window.currentSleep;
+
+var currentAnim;
+var isAnimPlaying = false;
 
 async function slides() {
   var header = document.getElementById('header');
   var sub = document.getElementById('subtitle');
   var img = document.getElementById("img");
 
-  for (i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
+  for (var i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
     if (i == 0) {
       i = 1;
     }
@@ -161,12 +170,43 @@ async function slides() {
 
     main.style.fontSize = "4rem";
     main.style.color = "white";
-    header.innerHTML = slide.text;
 
     if (slide.bg != null) {
       bg = document.getElementsByClassName("bg_"+slide.bg)[0];
       bg.style.display = "inherit";
       bg.play();
+    }
+
+    if (slide.text != null) {
+      header.innerHTML = slide.text;
+
+      if (slide.animation == null) {
+        slide.animation = "normal";
+      }
+      currentAnim = anime({
+        targets: '#header',
+
+        ...animations[slide.animation],
+
+        begin: function(anim) {
+          isAnimPlaying = true;
+        },
+        complete: function(anim) {
+          isAnimPlaying = false;
+        }
+      });
+
+      currentAnim.play();
+
+      if (slide.animateSub != false) {
+
+      }
+
+
+      
+      
+    } else {
+      header.innerHTML = "<h2></h2>"
     }
       
     if (slide.sub != null) {
@@ -188,13 +228,13 @@ async function slides() {
     })`;
   
     console.log(i)
-    bar = document.querySelector(`#bar_${i}`);
+    var bar = document.querySelector(`#bar_${i}`);
 
-    currentSleep = new Sleep();
-    await currentSleep.start(slide.time * 1000, bar, bar.maxWidth)
+    window.currentSleep = new Sleep();
+    await window.currentSleep.start(slide.time * 1000, bar, bar.maxWidth)
 
     if (i == Object.keys(slide_data).length && slide_change == 1) {
-      currentSleep.pause()
+      window.currentSleep.pause()
       for (let j = 1; j <= Object.keys(slide_data).length; j++) {
         bar = document.getElementById(`bar_${j}`);
         bar.style.width = `0%`;
@@ -214,8 +254,7 @@ function dataStatusFunc() {
 
 document.getElementsByClassName('container')[0].addEventListener('long-press', (e) => {
   shouldIgnoreTap = true;
-  console.log(e.target);
-  currentSleep.pause();
+  window.currentSleep.pause();
 });
 
 
@@ -225,8 +264,8 @@ fetch('./public/slides.json')
   .then(data => {
     slide_data = data;
 
-    bar_container = document.querySelector('.status-bar-container')
-    for (i = 1; i <= Object.keys(slide_data).length; i++) {
+    var bar_container = document.querySelector('.status-bar-container')
+    for (var i = 1; i <= Object.keys(slide_data).length; i++) {
       var bar = document.createElement('div');
       bar.classList.add('status-bar')
       bar.style.width = `${100/Object.keys(slide_data).length}%`
