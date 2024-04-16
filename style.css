@@ -110,7 +110,7 @@ body .container {
 .spotify-nav p {
   text-decoration: none;
   color: white;
-  font-size: 42px;
+  font-size: 38px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -120,7 +120,6 @@ body .container {
 }
 .spotify-nav .spotify-logo {
   display: flex;
-  gap: 10px;
   align-items: center;
   justify-content: center;
 
@@ -412,4 +411,8 @@ h3 {
   height: 100%;
   object-fit: cover;
   z-index: -1;
+}
+
+.fa-spotify {
+  margin-right: 20px;
 }
