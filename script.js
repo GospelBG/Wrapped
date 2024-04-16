@@ -191,6 +191,7 @@ async function slides() {
     if (slide.bg != null) {
       bg = document.getElementsByClassName("bg_"+slide.bg)[0];
       bg.style.display = "inherit";
+      bg.currentTime = 0;
       bg.play();
     }
 
