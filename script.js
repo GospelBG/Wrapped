@@ -183,8 +183,12 @@ async function slides() {
       if (slide.animation == null) {
         slide.animation = "normal";
       }
+      var animTargets = '#header';
+      if (slide.animateSub != false) {
+        animTargets += ', #subtitle';
+      }
       currentAnim = anime({
-        targets: '#header',
+        targets: animTargets,
 
         ...animations[slide.animation],
 
@@ -196,14 +200,7 @@ async function slides() {
         }
       });
 
-      currentAnim.play();
-
-      if (slide.animateSub != false) {
-
-      }
-
-
-      
+      currentAnim.play();     
       
     } else {
       header.innerHTML = "<h2></h2>"
