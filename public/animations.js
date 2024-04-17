@@ -1,5 +1,3 @@
-import { transformedTangentView } from "three/examples/jsm/nodes/Nodes.js";
-
 export let animations = {
     "normal": {
         keyframes: [
