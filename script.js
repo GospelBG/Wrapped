@@ -59,18 +59,18 @@ class Sleep {
         this.width += this.widthIncrement;
         this.remaining -= this.interval;
 
-        if (hasAnimOut && this.remaining <= 500 && !isAnimPlaying) {
+        if (hasAnimOut && this.remaining <= 500 && !window.isAnimPlaying) {
           anime({
             ...animations["normal_out"],
             
             begin: function() {
-              isAnimPlaying = true;
+              window.isAnimPlaying = true;
             },
             complete: function() {
-              isAnimPlaying = false;
+              window.isAnimPlaying = false;
             }
           }).play()
-          isAnimPlaying = true;
+          window.isAnimPlaying = true;
         }
         if (parseFloat(this.width) >= 100) {
           this.width = `100%`;
@@ -94,7 +94,7 @@ class Sleep {
     
     bg.pause();
 
-    if (isAnimPlaying) currentAnim.pause();
+    if (window.isAnimPlaying) currentAnim.pause();
   }
 
   resume() {
@@ -115,7 +115,7 @@ class Sleep {
       this.element.style.width = `${this.width}%`;
     }, this.interval);
 
-    if (isAnimPlaying) currentAnim.play();
+    if (window.isAnimPlaying) currentAnim.play();
     
     return this.promise;
   }
@@ -134,6 +134,7 @@ class Sleep {
     }
 
     bg.style.display = "none";
+    currentAnim.pause();
 
     this.resolve();
   }
@@ -163,7 +164,7 @@ var slide_change = 1;
 window.currentSleep;
 
 var currentAnim;
-var isAnimPlaying = false;
+window.isAnimPlaying = false;
 
 async function slides() {
   var header = document.getElementById('header');
@@ -205,18 +206,25 @@ async function slides() {
       if (slide.animateSub != false) {
         animTargets += ', #subtitle';
       }
-      currentAnim = anime({
-        targets: animTargets,
 
-        ...animations[slide.animation],
-
-        begin: function(anim) {
-          isAnimPlaying = true;
-        },
-        complete: function(anim) {
-          isAnimPlaying = false;
-        }
-      });
+      if (slide.animation.startsWith("TIMELINE")) {
+        currentAnim = animations[slide.animation];
+        currentAnim.play();
+      } else {
+        currentAnim = anime({
+          targets: animTargets,
+  
+          ...animations[slide.animation],
+  
+          begin: function(anim) {
+            window.isAnimPlaying = true;
+          },
+          complete: function(anim) {
+            window.isAnimPlaying = false;
+          }
+        });
+      }
+      
 
       currentAnim.play();     
       
