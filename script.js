@@ -135,7 +135,8 @@ class Sleep {
 
     bg.style.display = "none";
     currentAnim.pause();
-
+    currentAnim.reset();
+    
     this.resolve();
   }
 }
@@ -225,9 +226,7 @@ async function slides() {
         });
       }
       
-
       currentAnim.play();     
-      
     } else {
       header.innerHTML = "<h2></h2>"
     }

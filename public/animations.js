@@ -1,6 +1,7 @@
 export let animations = {
   "normal": {
       keyframes: [
+        {scale: 1, duration: 0},
         {translateY: 75, opacity: 0, scale: 1, duration: 0},
         {translateY: 0, opacity: 1, delay: 250}
       ],
@@ -63,10 +64,12 @@ export let animations = {
     },
     targets: '#header',
     translateY: [75, 0],
-    opacity: [0, 1]
+    opacity: [0, 1],
+    scale: [1, 1]
   })
   .add({
     targets: '#subtitle',
+    scale: [1, 1],
     translateY: [75, 0],
     opacity: [0, 1],
     delay: 500,
