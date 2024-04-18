@@ -121,12 +121,6 @@ class Sleep {
   }
 
   cancel() {
-    clearTimeout(this.timeout);
-    this.timeout = null;
-    clearInterval(this.increaseWidthInterval);
-    this.increaseWidthInterval = null;
-    this.width = 0;
-
     if (slide_change == 1) {
       this.element.style.width = `100%`;
     } else {
@@ -136,6 +130,12 @@ class Sleep {
     bg.style.display = "none";
     currentAnim.pause();
     currentAnim.reset();
+
+    clearTimeout(this.timeout);
+    this.timeout = null;
+    clearInterval(this.increaseWidthInterval);
+    this.increaseWidthInterval = null;
+    this.width = 0;
     
     this.resolve();
   }
