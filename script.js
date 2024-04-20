@@ -59,18 +59,8 @@ class Sleep {
         this.width += this.widthIncrement;
         this.remaining -= this.interval;
 
-        if (hasAnimOut && this.remaining <= 500 && !window.isAnimPlaying) {
-          anime({
-            ...animations["normal_out"],
-            
-            begin: function() {
-              window.isAnimPlaying = true;
-            },
-            complete: function() {
-              window.isAnimPlaying = false;
-            }
-          }).play()
-          window.isAnimPlaying = true;
+        if (hasAnimOut && this.remaining <= 500) {
+          animations.normal_out.play()
         }
         if (parseFloat(this.width) >= 100) {
           this.width = `100%`;
@@ -109,10 +99,12 @@ class Sleep {
     this.timeout = setTimeout(this.resolve, this.remaining);
     this.increaseWidthInterval = setInterval(() => {
       this.width += this.widthIncrement;
-      if (this.width > this.maxWidth) {
-        this.width = this.maxWidth;
+      if (parseFloat(this.width) >= 100) {
+        this.width = `100%`;
+        clearInterval(this.increaseWidthInterval)
+      } else {
+        this.element.style.width = `${this.width}%`;
       }
-      this.element.style.width = `${this.width}%`;
     }, this.interval);
 
     if (window.isAnimPlaying) currentAnim.play();
@@ -208,24 +200,9 @@ async function slides() {
         animTargets += ', #subtitle';
       }
 
-      if (slide.animation.startsWith("TIMELINE")) {
-        currentAnim = animations[slide.animation];
-        currentAnim.play();
-      } else {
-        currentAnim = anime({
-          targets: animTargets,
-  
-          ...animations[slide.animation],
-  
-          begin: function(anim) {
-            window.isAnimPlaying = true;
-          },
-          complete: function(anim) {
-            window.isAnimPlaying = false;
-          }
-        });
-      }
-      
+      currentAnim = animations[slide.animation];
+      currentAnim.play();
+
       currentAnim.play();     
     } else {
       header.innerHTML = "<h2></h2>"
