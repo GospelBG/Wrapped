@@ -311,6 +311,7 @@ if ((("standalone" in window.navigator) && window.navigator.standalone) || local
           childDiv.id = "bar_"+i;
           bar_container.appendChild(bar);
         }
+        document.getElementsByClassName("container")[0].style.display = "";
         localStorage.clear();
         slides();
       })
