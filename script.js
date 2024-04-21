@@ -60,7 +60,11 @@ class Sleep {
         this.remaining -= this.interval;
 
         if (hasAnimOut && this.remaining <= 500) {
-          animations.normal_out.play()
+          if (animations[window.slide.animation+"_out"] != null) {
+            animations[window.slide.animation+"_out"].play();
+          } else {
+            animations.normal_out.play()
+          }
         }
         if (parseFloat(this.width) >= 100) {
           this.width = `100%`;
@@ -81,6 +85,10 @@ class Sleep {
 
     btn_play.style.display = "block";
     btn_pause.style.display = "none";
+
+    if (window.slide.img_type == "video") {
+      document.getElementsByClassName("cover_video")[0].pause();
+    }
     
     bg.pause();
 
@@ -95,6 +103,10 @@ class Sleep {
     btn_play.style.display = "none";
 
     bg.play();
+    if (window.slide.img_type == "video") {
+      document.getElementsByClassName("cover_video")[0].play();
+    }
+
     this.startTime = new Date();
     this.timeout = setTimeout(this.resolve, this.remaining);
     this.increaseWidthInterval = setInterval(() => {
@@ -159,12 +171,15 @@ window.currentSleep;
 var currentAnim;
 window.isAnimPlaying = false;
 
+window.slide = null;
+
 async function slides() {
   var header = document.getElementById('header');
   var sub = document.getElementById('subtitle');
-  var img = document.getElementById("img");
+  var img = document.getElementsByTagName("img")[0];
 
   for (var i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
+    img = document.getElementsByTagName("img")[0]; // Reset img
     if (i == 0) {
       i = 1;
     }
@@ -173,7 +188,7 @@ async function slides() {
       bg.style.display = "none"; // Reset bg
     }
 
-    var slide = slide_data[i]
+    window.slide = slide_data[i]
     slide_change = 1
 
     btn_pause.style.display = "block";
@@ -182,44 +197,56 @@ async function slides() {
     main.style.fontSize = "4rem";
     main.style.color = "white";
 
-    if (slide.bg != null) {
-      bg = document.getElementsByClassName("bg_"+slide.bg)[0];
+    if (window.slide.bg != null) {
+      bg = document.getElementsByClassName("bg_"+window.slide.bg)[0];
       bg.style.display = "inherit";
       bg.currentTime = 0;
       bg.play();
     }
 
-    if (slide.text != null) {
-      header.innerHTML = slide.text;
+    if (window.slide.text != null) {
+      header.innerHTML = window.slide.text;
 
-      if (slide.animation == null) {
-        slide.animation = "normal";
+      if (window.slide.animation == null) {
+        window.slide.animation = "normal";
       }
       var animTargets = '#header';
-      if (slide.animateSub != false) {
+      if (window.slide.animateSub != false) {
         animTargets += ', #subtitle';
       }
 
-      currentAnim = animations[slide.animation];
-      currentAnim.play();
-
+      currentAnim = animations[window.slide.animation];
       currentAnim.play();     
     } else {
       header.innerHTML = "<h2></h2>"
     }
       
-    if (slide.sub != null) {
-      sub.innerHTML = slide.sub;
+    if (window.slide.sub != null) {
+      sub.innerHTML = window.slide.sub;
       sub.style.position = ''
     } else {
       sub.innerHTML = ""
       sub.style.position = 'absolute'
     }
 
-    if (slide.img != null) {
-      img.src = slide.img;
-      img.className = "cover_img"
+    console.log(img)
+
+    if (window.slide.img != null) {
+      if (window.slide.img_type == "video") {
+        img.className = "cover_img_hidden" //Hide "real" image
+
+        img = document.getElementsByClassName("cover_video")[0];
+        img.className = "cover_video cover_img"
+        img.autoplay = true;
+        img.muted = true;
+      } else {
+        document.getElementsByClassName("cover_video")[0].className = "cover_video cover_img_hidden"
+        img.className = "cover_img"
+      }
+      img.src = window.slide.img;
+      console.log(img.tagName)
     } else {
+      document.getElementsByClassName("cover_video")[0].className = "cover_video cover_img_hidden"
       img.className = "cover_img_hidden"
     }
   
@@ -232,7 +259,7 @@ async function slides() {
     var bar = document.querySelector(`#bar_${i}`);
 
     window.currentSleep = new Sleep();
-    await window.currentSleep.start(slide.time * 1000, bar, bar.maxWidth)
+    await window.currentSleep.start(window.slide.time * 1000, bar, bar.maxWidth)
 
     if (i == Object.keys(slide_data).length && slide_change == 1) {
       window.currentSleep.pause()

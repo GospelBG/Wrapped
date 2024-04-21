@@ -395,7 +395,12 @@ h3 {
 }
 
 .cover_img {
-  width: 50%;
+  position: absolute;
+  width: 75%;
+}
+
+.cover_video {
+  border-radius: 50px;
 }
 
 .cover_img_hidden {
