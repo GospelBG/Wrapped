@@ -109,14 +109,14 @@ body .container {
 }
 .spotify-nav p {
   text-decoration: none;
-  color: white;
   font-size: 38px;
   font-weight: 600;
   cursor: pointer;
+  color: white;
 }
 .spotify-nav a:first-child i {
-  color: white;
   font-size: 62px;
+  color: white;
 }
 .spotify-nav .spotify-logo {
   display: flex;
@@ -395,7 +395,6 @@ h3 {
 }
 
 .cover_img {
-  position: absolute;
   width: 75%;
 }
 

@@ -40,18 +40,42 @@ export let animations = {
   .add({
     begin: function() {
       window.isAnimPlaying = true;
+      document.getElementById('header').style.position = "fixed";
     },
     targets: '#header',
-    translateY: ['-350%', '-300%'],
+    top: ['2.5%', '7%'],
     opacity: [0, 1],
-    scale: [1, 1],
+    scale: [1, 1]
+  }).add({
+    targets: ['#subtitle', '#img'],
+    translateY: ['75px', '0px'],
+    opacity: [0, 1],
     complete: function() {
       window.isAnimPlaying = false;
     }
+  }),
+
+  "title_top_out":anime.timeline({
+    autoplay: false,
+    duration: 1000,
+    easing: 'cubicBezier(0.3, 0.75, 0.5, 1)'
+  }).add({
+    begin: function() {
+      window.isAnimPlaying = true;
+    },
+    targets: '#header',
+    top: ['7%', '2.5%'],
+    opacity: [1, 0],
+    duration: 1000
   }).add({
     targets: ['#subtitle', '#img'],
-    translateY: ['-150%', '-100%'],
-    opacity: [0, 1]
+    translateY: ['0px', '-75px'],
+    opacity: [1, 0],
+    offset: 0,
+    complete: function() {
+      window.isAnimPlaying = false;
+      document.getElementById('header').style.position = "";
+    }
   }),
   "big_title": anime.timeline({     
     autoplay: false,

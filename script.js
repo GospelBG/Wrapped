@@ -180,6 +180,11 @@ async function slides() {
 
   for (var i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
     img = document.getElementsByTagName("img")[0]; // Reset img
+    
+    //Reset Styling
+    header.style = ""
+    sub.style = ""
+    
     if (i == 0) {
       i = 1;
     }
