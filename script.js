@@ -1,3 +1,4 @@
+import { bypass } from "three/examples/jsm/nodes/Nodes.js";
 import { animations } from "./public/animations.js";
 
 let slide_data;
@@ -291,25 +292,35 @@ document.getElementsByClassName('container')[0].addEventListener('long-press', (
 });
 
 
-  
-fetch('./public/slides.json')
-  .then(response => response.json())
-  .then(data => {
-    slide_data = data;
+if ((("standalone" in window.navigator) && window.navigator.standalone) || localStorage.getItem("override_pwa") == "true") {
+      document.body.removeChild(document.getElementsByClassName("no_pwa")[0]);
+      fetch('./public/slides.json')
+      .then(response => response.json())
+      .then(data => {
+        slide_data = data;
+    
+        var bar_container = document.querySelector('.status-bar-container')
+        for (var i = 1; i <= Object.keys(slide_data).length; i++) {
+          var bar = document.createElement('div');
+          bar.classList.add('status-bar')
+          bar.style.width = `${100/Object.keys(slide_data).length}%`
+          
+          var childDiv = document.createElement('div');
+          childDiv.classList.add('status-bar-progress');
+          bar.appendChild(childDiv);
+          childDiv.id = "bar_"+i;
+          bar_container.appendChild(bar);
+        }
+        localStorage.clear();
+        slides();
+      })
+      .catch(error => console.error('Error:', error));
+    // Web page is loaded via app mode (full-screen mode)
+    // (window.navigator.standalone is TRUE if user accesses website via App Mode)
 
-    var bar_container = document.querySelector('.status-bar-container')
-    for (var i = 1; i <= Object.keys(slide_data).length; i++) {
-      var bar = document.createElement('div');
-      bar.classList.add('status-bar')
-      bar.style.width = `${100/Object.keys(slide_data).length}%`
-      
-      var childDiv = document.createElement('div');
-      childDiv.classList.add('status-bar-progress');
-      bar.appendChild(childDiv);
-      childDiv.id = "bar_"+i;
-      bar_container.appendChild(bar);
-    }
-
-    slides();
-  })
-  .catch(error => console.error('Error:', error));
+} else {
+  console.log("Not in standalone mode");
+  document.body.removeChild(document.getElementsByClassName("container")[0]);
+    // Web page is loaded via standard Safari mode
+    // (window.navigator.standalone is FALSE if user accesses website in standard safari)
+}

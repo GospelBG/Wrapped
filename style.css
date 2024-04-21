@@ -1,6 +1,7 @@
 html {
   overflow: hidden;
   font-family: Metropolis;
+  color: white;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -349,6 +350,14 @@ main[data-status="1"] .shape-12 {
   height: 100%;
 }
 
+h1 {
+  font-size: 5vw;
+  font-weight: bolder;
+  text-align: center;
+  margin: 5%;
+  word-spacing: -0.075em;
+}
+
 h2 {
   font-size: xxxx-large;
   font-weight: bolder;
@@ -362,8 +371,26 @@ h3 {
   font-weight: normal;
   vertical-align: bottom;
   text-align: center;
-
   margin: 5%;
+}
+
+p {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+}
+p img {
+  height: 50px;
+  margin: 0 10px;
+}
+
+.no_pwa button {
+  margin-top: 5%;
+  font-size: 25px;
+  width: 50%;
+  transform: translateX(50%);
 }
 
 .status-bar-container {

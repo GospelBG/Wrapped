@@ -67,6 +67,22 @@
       <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Title3" src="./public/bg/Title3.mp4"></video>
     </main>
   </div>
+
+  <div class="no_pwa">
+      <h1>For better experience you may want to use this website as a Web App</h1>
+
+      <p>1. Press the icon <img src="./public/icons/ios_share.svg">.</p>
+      <p>2. Choose <img src="./public/icons/ios_addtohomescreen.svg">.</p>
+      <p>3. Press the icon that appeared in your homescreen.</p>
+
+      <button onclick="bypassPWA()">Press here to continue anyways</button>
+  </div>
     <script src="script.js" type="module"></script>
+    <script>
+      function bypassPWA() {
+        localStorage.setItem("override_pwa", "true");
+        location.reload();
+      }
+    </script>
   </body>
 </html>
