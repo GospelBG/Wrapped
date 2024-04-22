@@ -1,4 +1,3 @@
-import { bypass } from "three/examples/jsm/nodes/Nodes.js";
 import { animations } from "./public/animations.js";
 
 let slide_data;
@@ -235,8 +234,6 @@ async function slides() {
       sub.style.position = 'absolute'
     }
 
-    console.log(img)
-
     if (window.slide.img != null) {
       if (window.slide.img_type == "video") {
         img.className = "cover_img_hidden" //Hide "real" image
@@ -244,7 +241,6 @@ async function slides() {
         img = document.getElementsByClassName("cover_video")[0];
         img.className = "cover_video cover_img"
         img.autoplay = true;
-        img.muted = true;
       } else {
         document.getElementsByClassName("cover_video")[0].className = "cover_video cover_img_hidden"
         img.className = "cover_img"
