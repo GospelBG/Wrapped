@@ -32,6 +32,22 @@ export let animations = {
       window.isAnimPlaying = false;
     }
   }),
+  "intro" : anime.timeline({
+    targets: '#header',
+    autoplay: false,
+    easing: 'linear',
+    duration: 5000,
+    complete: function() {
+      window.isAnimPlaying = false;
+    }
+  }).add({
+    begin: function() {
+      window.isAnimPlaying = true;
+    },
+    scale: [0, 1],
+    delay: 3025,
+    duration: 750
+  }),
   "title_top":anime.timeline({
     autoplay: false,
     duration: 1000,
