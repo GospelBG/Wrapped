@@ -61,7 +61,7 @@ class Sleep {
         } else {
           anim = animations.normal_out;
         }
-        if (hasAnimOut && this.remaining <= anim.duration) {
+        if (hasAnimOut && this.remaining <= anim.duration && !window.isAnimPlaying) {
           anim.play();
           anim.finished.then(() => {
             this.width = `100%`;
