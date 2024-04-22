@@ -18,7 +18,6 @@ export let animations = {
   }),
   "normal_out": anime.timeline({
     autoplay: false,
-    duration: 500,
     easing: 'cubicBezier(0.3, 0.75, 0.5, 1)'
   })
   .add({
@@ -28,15 +27,14 @@ export let animations = {
     targets: ['#header', '#subtitle', '#img'],
     translateY: [0, -75],
     opacity: [1, 0],
+    duration: 500,
     complete: function() {
       window.isAnimPlaying = false;
     }
   }),
   "intro" : anime.timeline({
-    targets: '#header',
     autoplay: false,
     easing: 'linear',
-    duration: 5000,
     complete: function() {
       window.isAnimPlaying = false;
     }
@@ -44,6 +42,7 @@ export let animations = {
     begin: function() {
       window.isAnimPlaying = true;
     },
+    targets: '#header',
     scale: [0, 1],
     delay: 3025,
     duration: 750
@@ -61,11 +60,14 @@ export let animations = {
     targets: '#header',
     top: ['2.5%', '7%'],
     opacity: [0, 1],
-    scale: [1, 1]
+    scale: [1, 1],
+    duration: 500
   }).add({
     targets: ['#subtitle', '#img'],
     translateY: ['75px', '0px'],
     opacity: [0, 1],
+    duration: 500,
+    delay: 1000,
     complete: function() {
       window.isAnimPlaying = false;
     }
@@ -73,7 +75,6 @@ export let animations = {
 
   "title_top_out":anime.timeline({
     autoplay: false,
-    duration: 1000,
     easing: 'cubicBezier(0.3, 0.75, 0.5, 1)'
   }).add({
     begin: function() {
@@ -95,7 +96,6 @@ export let animations = {
   }),
   "big_title": anime.timeline({     
     autoplay: false,
-    duration: 1000,
     easing: 'cubicBezier(0.3, 0.75, 0.5, 1)'
   })
   .add({
@@ -128,7 +128,6 @@ export let animations = {
 
   "subtitle_delay" : anime.timeline({
     autoplay: false,
-    duration: 1000,
     easing: 'cubicBezier(0.3, 0.75, 0.5, 1)'
   })
   .add({
@@ -140,14 +139,15 @@ export let animations = {
     targets: '#header',
     translateY: ["75px", "0px"],
     opacity: [0, 1],
-    scale: [1, 1]
+    scale: [1, 1],
+    duration: 1000
   })
   .add({
     targets: ['#subtitle', '#img'],
     scale: [1, 1],
     translateY: ["75px", "0px"],
     opacity: [0, 1],
-    delay: 500,
+    duration: 1000,
     complete: function() {
       window.isAnimPlaying = false;
     }
