@@ -447,3 +447,15 @@ p img {
 .fa-spotify {
   margin-right: 20px;
 }
+
+.fa-pause .fa-play {
+  font-size: 95%;
+}
+
+.fa-volume-high, .fa-volume-off {
+  font-size: 85%;
+}
+
+.fa-xmark {
+  font-size: 110%;
+}

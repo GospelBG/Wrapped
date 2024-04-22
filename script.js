@@ -2,12 +2,6 @@ import { animations } from "./public/animations.js";
 
 let slide_data;
 var bg;
-let box; 
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  box = document.querySelector('#touch');
-  box.addEventListener('click', chooseSide);
-});
 
 var shouldIgnoreTap = false;
 
@@ -59,19 +53,20 @@ class Sleep {
         this.width += this.widthIncrement;
         this.remaining -= this.interval;
 
-        if (hasAnimOut && this.remaining <= 500) {
-          if (animations[window.slide.animation+"_out"] != null) {
-            animations[window.slide.animation+"_out"].play();
-          } else {
-            animations.normal_out.play()
-          }
-        }
-        if (parseFloat(this.width) >= 100) {
-          this.width = `100%`;
-          clearInterval(this.increaseWidthInterval)
+        var anim;
+        if (animations[window.slide.animation+"_out"] != null) {
+          anim = animations[window.slide.animation+"_out"];
         } else {
-          this.element.style.width = `${this.width}%`;
+          anim = animations.normal_out;
         }
+        if (hasAnimOut && this.remaining <= anim.duration) {
+          anim.play();
+          anim.finished.then(() => {
+            this.width = `100%`;
+            clearInterval(this.increaseWidthInterval)
+          });
+        }
+        this.element.style.width = `${this.width}%`;
       }, this.interval);
     });
   }
@@ -180,8 +175,13 @@ async function slides() {
 
   for (var i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
     img = document.getElementsByTagName("img")[0]; // Reset img
+
+    if (isAnimPlaying) {
+      console.log(currentAnim)
+      currentAnim.pause();
+    }
     
-    //Reset Styling
+    // Reset Styling
     header.style = ""
     sub.style = ""
     
@@ -290,6 +290,13 @@ document.getElementsByClassName('container')[0].addEventListener('long-press', (
 
 if ((("standalone" in window.navigator) && window.navigator.standalone) || localStorage.getItem("override_pwa") == "true") {
       document.body.removeChild(document.getElementsByClassName("no_pwa")[0]);
+
+      let box; 
+      document.addEventListener('DOMContentLoaded', ()=>{
+        box = document.querySelector('#touch');
+        box.addEventListener('click', chooseSide);
+      });
+
       fetch('./public/slides.json')
       .then(response => response.json())
       .then(data => {

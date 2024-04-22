@@ -32,19 +32,19 @@
 
       <div class="spotify-option">
         <div class="button-bg">
-          <button type="button" style="scale: 95%;"> <!-- TODO: Both beign clicked at the same time (both onclick methods called) -->
+          <button type="button"> <!-- TODO: Both beign clicked at the same time (both onclick methods called) -->
             <i class="fa-solid fa-pause" id="pause" onclick="window.currentSleep.pause()"></i>
             <i class="fa-solid fa-play" id="play" onclick="window.currentSleep.resume()"></i>
           </button>
         </div>
         <div class="button-bg">
-          <button type="button" style="scale: 85%;">
+          <button type="button">
             <i class="fa-solid fa-volume-high" id="volume-on" onclick="volumeOn()"></i>
             <i class="fa-solid fa-volume-off" id="volume-off" onclick="volumeOff()"></i>
           </button>
         </div>
         <div class="button-bg">
-          <button type="button" class="close" style="scale: 110%;" onclick="closeSelf()">
+          <button type="button" class="close" onclick="closeSelf()">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
