@@ -45,6 +45,8 @@ class Sleep {
     this.interval = 100;
     this.widthIncrement = 100 / (this.duration / this.interval);
 
+    currentAnim.play();
+
     return new Promise((resolve) => {
       this.resolve = resolve;
       this.startTime = new Date();
@@ -174,6 +176,14 @@ async function slides() {
   var img = document.getElementsByTagName("img")[0];
 
   for (var i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
+    if (i == Object.keys(slide_data).length && slide_change == 1) {
+      for (let j = 1; j <= Object.keys(slide_data).length; j++) {
+        bar = document.getElementById(`bar_${j}`);
+        bar.style.width = `0%`;
+      }
+      i = 0;
+    }
+
     img = document.getElementsByTagName("img")[0]; // Reset img
 
     if (isAnimPlaying) {
@@ -202,13 +212,6 @@ async function slides() {
     main.style.fontSize = "4rem";
     main.style.color = "white";
 
-    if (window.slide.bg != null) {
-      bg = document.getElementsByClassName("bg_"+window.slide.bg)[0];
-      bg.style.display = "inherit";
-      bg.currentTime = 0;
-      bg.play();
-    }
-
     if (window.slide.text != null) {
       header.innerHTML = window.slide.text;
 
@@ -220,8 +223,7 @@ async function slides() {
         animTargets += ', #subtitle';
       }
 
-      currentAnim = animations[window.slide.animation];
-      currentAnim.play();     
+      currentAnim = animations[window.slide.animation];     
     } else {
       header.innerHTML = "<h2></h2>"
     }
@@ -251,6 +253,13 @@ async function slides() {
       document.getElementsByClassName("cover_video")[0].className = "cover_video cover_img_hidden"
       img.className = "cover_img_hidden"
     }
+
+    if (window.slide.bg != null) {
+      bg = document.getElementsByClassName("bg_"+window.slide.bg)[0];
+      bg.style.display = "inherit";
+      bg.currentTime = 0;
+      bg.play();
+    }
   
     main.dataset.status = statusCount;
     main.style.background = `rgb(${i * 5}, ${i * 5}, ${
@@ -261,16 +270,7 @@ async function slides() {
     var bar = document.querySelector(`#bar_${i}`);
 
     window.currentSleep = new Sleep();
-    await window.currentSleep.start(window.slide.time * 1000, bar, bar.maxWidth)
-
-    if (i == Object.keys(slide_data).length && slide_change == 1) {
-      window.currentSleep.pause()
-      for (let j = 1; j <= Object.keys(slide_data).length; j++) {
-        bar = document.getElementById(`bar_${j}`);
-        bar.style.width = `0%`;
-      }
-      i = 0;
-    }
+    await window.currentSleep.start(window.slide.time * 1000, bar, bar.maxWidth);
   }
 }
 
@@ -287,17 +287,21 @@ document.getElementsByClassName('container')[0].addEventListener('long-press', (
   window.currentSleep.pause();
 });
 
-
+var isStandalone = false;
 if ((("standalone" in window.navigator) && window.navigator.standalone) || localStorage.getItem("override_pwa") == "true") {
-      document.body.removeChild(document.getElementsByClassName("no_pwa")[0]);
+  isStandalone = true;
+  document.body.removeChild(document.getElementsByClassName("no_pwa")[0]);
 
-      let box; 
-      document.addEventListener('DOMContentLoaded', ()=>{
-        box = document.querySelector('#touch');
-        box.addEventListener('click', chooseSide);
-      });
+  let box; 
+  document.addEventListener('DOMContentLoaded', ()=>{
+    box = document.querySelector('#touch');
+    box.addEventListener('click', chooseSide);
+  });
+}
 
-      fetch('./public/slides.json')
+document.onreadystatechange = () => {
+  if (isStandalone) {
+    fetch('./public/slides.json')
       .then(response => response.json())
       .then(data => {
         slide_data = data;
@@ -319,12 +323,8 @@ if ((("standalone" in window.navigator) && window.navigator.standalone) || local
         slides();
       })
       .catch(error => console.error('Error:', error));
-    // Web page is loaded via app mode (full-screen mode)
-    // (window.navigator.standalone is TRUE if user accesses website via App Mode)
-
-} else {
+  } else {
   console.log("Not in standalone mode");
   document.body.removeChild(document.getElementsByClassName("container")[0]);
-    // Web page is loaded via standard Safari mode
-    // (window.navigator.standalone is FALSE if user accesses website in standard safari)
-}
+  }
+};
