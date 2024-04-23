@@ -1,4 +1,7 @@
-var animations = window.animations;
+var animations;
+import('./public/animations.js').then(module => {
+  animations = module.animations;
+});
 
 let slide_data;
 var bg;
