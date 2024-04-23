@@ -16,11 +16,11 @@ function chooseSide(e) {
   if (clientX < clientWidth / 2) {
     console.log('left')
     slide_change = -1
-    window.currentSleep.cancel();
+    currentSleep.cancel();
   } else {
     console.log('right')
     slide_change = 1
-    window.currentSleep.cancel();
+    currentSleep.cancel();
   }
 }
 
@@ -56,12 +56,12 @@ class Sleep {
         this.remaining -= this.interval;
 
         var anim;
-        if (animations[window.slide.animation+"_out"] != null) {
-          anim = animations[window.slide.animation+"_out"];
+        if (animations[slide.animation+"_out"] != null) {
+          anim = animations[slide.animation+"_out"];
         } else {
           anim = animations.normal_out;
         }
-        if (hasAnimOut && this.remaining <= anim.duration && !window.isAnimPlaying) {
+        if (hasAnimOut && this.remaining <= anim.duration && !isAnimPlaying) {
           anim.play();
           anim.finished.then(() => {
             this.width = `100%`;
@@ -83,13 +83,13 @@ class Sleep {
     btn_play.style.display = "block";
     btn_pause.style.display = "none";
 
-    if (window.slide.img_type == "video") {
+    if (slide.img_type == "video") {
       document.getElementsByClassName("cover_video")[0].pause();
     }
     
     bg.pause();
 
-    if (window.isAnimPlaying) currentAnim.pause();
+    if (isAnimPlaying) currentAnim.pause();
   }
 
   resume() {
@@ -100,7 +100,7 @@ class Sleep {
     btn_play.style.display = "none";
 
     bg.play();
-    if (window.slide.img_type == "video") {
+    if (slide.img_type == "video") {
       document.getElementsByClassName("cover_video")[0].play();
     }
 
@@ -116,7 +116,7 @@ class Sleep {
       }
     }, this.interval);
 
-    if (window.isAnimPlaying) currentAnim.play();
+    if (isAnimPlaying) currentAnim.play();
     
     return this.promise;
   }
@@ -150,7 +150,7 @@ function volumeOn() {
   volumeON.style.display = "none";
   shouldAudioBeMuted = true;
 
-  if (window.slide.img_type == "video") {
+  if (slide.img_type == "video") {
     document.getElementsByClassName("cover_video")[0].muted = shouldAudioBeMuted;
   }
 }
@@ -159,7 +159,7 @@ function volumeOff() {
   volumeOFF.style.display = "none";
   shouldAudioBeMuted = false;
 
-  if (window.slide.img_type == "video") {
+  if (slide.img_type == "video") {
     document.getElementsByClassName("cover_video")[0].muted = shouldAudioBeMuted;
   }
 }
@@ -175,12 +175,12 @@ const main = document.querySelector("main");
 let statusCount = 2;
 
 var slide_change = 1;
-window.currentSleep;
+var currentSleep;
 
 var currentAnim;
-window.isAnimPlaying = false;
+isAnimPlaying = false;
 
-window.slide = null;
+slide = null;
 
 async function slides() {
   var header = document.getElementById('header');
@@ -215,7 +215,7 @@ async function slides() {
       bg.style.display = "none"; // Reset bg
     }
 
-    window.slide = slide_data[i]
+    slide = slide_data[i]
     slide_change = 1
 
     btn_pause.style.display = "block";
@@ -224,32 +224,32 @@ async function slides() {
     main.style.fontSize = "4rem";
     main.style.color = "white";
 
-    if (window.slide.text != null) {
-      header.innerHTML = window.slide.text;
+    if (slide.text != null) {
+      header.innerHTML = slide.text;
 
-      if (window.slide.animation == null) {
-        window.slide.animation = "normal";
+      if (slide.animation == null) {
+        slide.animation = "normal";
       }
       var animTargets = '#header';
-      if (window.slide.animateSub != false) {
+      if (slide.animateSub != false) {
         animTargets += ', #subtitle';
       }
 
-      currentAnim = animations[window.slide.animation];     
+      currentAnim = animations[slide.animation];     
     } else {
       header.innerHTML = "<h2></h2>"
     }
       
-    if (window.slide.sub != null) {
-      sub.innerHTML = window.slide.sub;
+    if (slide.sub != null) {
+      sub.innerHTML = slide.sub;
       sub.style.position = ''
     } else {
       sub.innerHTML = ""
       sub.style.position = 'absolute'
     }
 
-    if (window.slide.img != null) {
-      if (window.slide.img_type == "video") {
+    if (slide.img != null) {
+      if (slide.img_type == "video") {
         img.className = "cover_img_hidden" //Hide "real" image
 
         img = document.getElementsByClassName("cover_video")[0];
@@ -260,15 +260,15 @@ async function slides() {
         document.getElementsByClassName("cover_video")[0].className = "cover_video cover_img_hidden"
         img.className = "cover_img"
       }
-      img.src = window.slide.img;
+      img.src = slide.img;
       console.log(img.tagName)
     } else {
       document.getElementsByClassName("cover_video")[0].className = "cover_video cover_img_hidden"
       img.className = "cover_img_hidden"
     }
 
-    if (window.slide.bg != null) {
-      bg = document.getElementsByClassName("bg_"+window.slide.bg)[0];
+    if (slide.bg != null) {
+      bg = document.getElementsByClassName("bg_"+slide.bg)[0];
       bg.style.display = "inherit";
       bg.currentTime = 0;
       bg.play();
@@ -282,8 +282,8 @@ async function slides() {
     console.log(i)
     var bar = document.querySelector(`#bar_${i}`);
 
-    window.currentSleep = new Sleep();
-    await window.currentSleep.start(window.slide.time * 1000, bar, bar.maxWidth);
+    currentSleep = new Sleep();
+    await currentSleep.start(slide.time * 1000, bar, bar.maxWidth);
   }
 }
 
@@ -297,7 +297,7 @@ function dataStatusFunc() {
 
 document.getElementsByClassName('container')[0].addEventListener('long-press', (e) => {
   shouldIgnoreTap = true;
-  window.currentSleep.pause();
+  currentSleep.pause();
 });
 
 var isStandalone = false;
