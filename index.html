@@ -28,7 +28,7 @@
     </script>
   </head>
   <body>
-  <div class="container" data-long-press-delay="250" ontouchend="window.currentSleep.resume()" style="display: none;">
+  <div class="container" style="display: none;">
     <div class="status-bar-container"></div>
     <div class="spotify-nav">
       <div class="spotify-logo">
@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <main data-status="1">
+    <main data-status="1" data-long-press-delay="250" ontouchend="currentSleep.resume()">
       <img class="cover_img" id="img" src="">
       <h2 id="header"></h2>
       <h3 id="subtitle"></h3>

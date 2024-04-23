@@ -295,7 +295,7 @@ function dataStatusFunc() {
   }
 }
 
-document.getElementsByClassName('container')[0].addEventListener('long-press', (e) => {
+document.getElementsByTagName("main")[0].addEventListener('long-press', (e) => {
   shouldIgnoreTap = true;
   currentSleep.pause();
 });
