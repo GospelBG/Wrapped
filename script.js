@@ -187,9 +187,10 @@ async function slides() {
   var sub = document.getElementById('subtitle');
   var img = document.getElementsByTagName("img")[0];
 
-  for (var i = 1; i <= Object.keys(slide_data).length; i = i + slide_change) {
-    if (i == Object.keys(slide_data).length && slide_change == 1) {
+  for (var i = 1; i <= Object.keys(slide_data).length + 1; i = i + slide_change) {
+    if (i >= Object.keys(slide_data).length + 1 && slide_change == 1) {
       for (let j = 1; j <= Object.keys(slide_data).length; j++) {
+        currentSleep.cancel(); // Cancel current sleep to avoid bar animation
         bar = document.getElementById(`bar_${j}`);
         bar.style.width = `0%`;
       }
@@ -331,6 +332,7 @@ if (isStandalone) {
       }
       document.getElementsByClassName("container")[0].style.display = "";
       localStorage.clear();
+
       slides();
     })
     .catch(error => console.error('Error:', error));
