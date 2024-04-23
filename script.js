@@ -143,13 +143,25 @@ class Sleep {
 }
 const volumeON = document.getElementById("volume-on");
 const volumeOFF = document.getElementById("volume-off");
+
+shouldAudioBeMuted = false;
 function volumeOn() {
   volumeOFF.style.display = "block";
   volumeON.style.display = "none";
+  shouldAudioBeMuted = true;
+
+  if (window.slide.img_type == "video") {
+    document.getElementsByClassName("cover_video")[0].muted = shouldAudioBeMuted;
+  }
 }
 function volumeOff() {
   volumeON.style.display = "block";
   volumeOFF.style.display = "none";
+  shouldAudioBeMuted = false;
+
+  if (window.slide.img_type == "video") {
+    document.getElementsByClassName("cover_video")[0].muted = shouldAudioBeMuted;
+  }
 }
 
 const btn_pause = document.getElementById("pause");
@@ -243,6 +255,7 @@ async function slides() {
         img = document.getElementsByClassName("cover_video")[0];
         img.className = "cover_video cover_img"
         img.autoplay = true;
+        img.muted = shouldAudioBeMuted;
       } else {
         document.getElementsByClassName("cover_video")[0].className = "cover_video cover_img_hidden"
         img.className = "cover_img"
