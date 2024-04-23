@@ -21,6 +21,11 @@
     
     <link rel="icon" href="./public/icons/icon.png">
     <link rel="apple-touch-icon" href="./public/icons/icon.png">
+
+    <script type="module">
+      import { animations } from "./public/animations.js";
+      window.animations = animations;
+    </script>
   </head>
   <body>
   <div class="container" data-long-press-delay="250" ontouchend="window.currentSleep.resume()" style="display: none;">
@@ -80,7 +85,7 @@
 
       <button onclick="bypassPWA()">Press here to continue anyways</button>
   </div>
-    <script src="script.js" type="module"></script>
+    <script src="script.js"></script>
     <script>
       function bypassPWA() {
         localStorage.setItem("override_pwa", "true");

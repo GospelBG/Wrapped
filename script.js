@@ -1,4 +1,4 @@
-import { animations } from "./public/animations.js";
+var animations = window.animations;
 
 let slide_data;
 var bg;
@@ -298,33 +298,31 @@ if ((("standalone" in window.navigator) && window.navigator.standalone) || local
     box.addEventListener('click', chooseSide);
   });
 }
-
-document.onreadystatechange = () => {
-  if (isStandalone) {
-    fetch('./public/slides.json')
-      .then(response => response.json())
-      .then(data => {
-        slide_data = data;
-    
-        var bar_container = document.querySelector('.status-bar-container')
-        for (var i = 1; i <= Object.keys(slide_data).length; i++) {
-          var bar = document.createElement('div');
-          bar.classList.add('status-bar')
-          bar.style.width = `${100/Object.keys(slide_data).length}%`
-          
-          var childDiv = document.createElement('div');
-          childDiv.classList.add('status-bar-progress');
-          bar.appendChild(childDiv);
-          childDiv.id = "bar_"+i;
-          bar_container.appendChild(bar);
-        }
-        document.getElementsByClassName("container")[0].style.display = "";
-        localStorage.clear();
-        slides();
-      })
-      .catch(error => console.error('Error:', error));
-  } else {
+if (isStandalone) {
+  fetch('./public/slides.json')
+    .then(response => response.json())
+    .then(data => {
+      slide_data = data;
+  
+      var bar_container = document.querySelector('.status-bar-container')
+      for (var i = 1; i <= Object.keys(slide_data).length; i++) {
+        var bar = document.createElement('div');
+        bar.classList.add('status-bar')
+        bar.style.width = `${100/Object.keys(slide_data).length}%`
+        
+        var childDiv = document.createElement('div');
+        childDiv.classList.add('status-bar-progress');
+        bar.appendChild(childDiv);
+        childDiv.id = "bar_"+i;
+        bar_container.appendChild(bar);
+      }
+      document.getElementsByClassName("container")[0].style.display = "";
+      localStorage.clear();
+      slides();
+    })
+    .catch(error => console.error('Error:', error));
+} else {
   console.log("Not in standalone mode");
   document.body.removeChild(document.getElementsByClassName("container")[0]);
-  }
-};
+}
+
