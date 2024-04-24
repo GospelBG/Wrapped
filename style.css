@@ -1,83 +1,66 @@
 html {
   overflow: hidden;
   font-family: Metropolis;
-  color: white;
+  color: #fff;
   user-select: none;
-  -webkit-user-select: none;
+  -webkit-user-select: none
 }
 
-/* Box sizing rules */
 *,
-*::before,
-*::after {
+::before,
+::after {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 0
 }
 
-/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role=list],
-ol[role=list] {
-  list-style: none;
-}
-
-/* Set core root defaults */
 html:focus-within {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth
 }
 
-/* Set core body defaults */
 body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
-  line-height: 1.5;
+  line-height: 1.5
 }
 
-/* A elements that don't have a class get default styles */
 a:not([class]) {
-  text-decoration-skip-ink: auto;
+  text-decoration-skip-ink: auto
 }
 
-/* Make images easier to work with */
-img,
-picture {
+img {
   max-width: 100%;
-  display: block;
+  display: block
 }
 
-/* Inherit fonts for inputs and buttons */
-input,
-button,
-textarea,
-select {
-  font: inherit;
+button {
+  font: inherit
 }
 
-/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
-    scroll-behavior: auto;
+    scroll-behavior: auto
   }
 
   *,
-*::before,
-*::after {
-    animation-duration: 0.01ms !important;
+  ::before,
+  ::after {
+    animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important
   }
 }
-/* COLORS */
-/* MAIN */
+
 body {
   background: #101010;
   display: flex;
   height: 100vh;
   width: 100%;
   justify-content: center;
-  align-items: center;
+  align-items: center
 }
+
 body .container {
   width: 100%;
   height: 100%;
@@ -86,19 +69,7 @@ body .container {
   box-shadow: 0 0 20px #070707;
   display: flex;
   flex-direction: column;
-  position: relative;
-}
-
-.bar-bottom {
-  stroke: #fefefe;
-  opacity: 0.2;
-  position: absolute;
-}
-
-.bar-top {
-  animation: status_stroke 9s infinite;
-  stroke: white;
-  opacity: 0.9;
+  position: relative
 }
 
 .spotify-nav {
@@ -106,51 +77,51 @@ body .container {
   margin-left: 38px;
   margin-right: 38px;
   margin-top: 2px;
-  justify-content: space-between;
+  justify-content: space-between
 }
+
 .spotify-nav p {
   text-decoration: none;
   font-size: 38px;
   font-weight: 600;
   cursor: pointer;
-  color: white;
+  color: #fff
 }
+
 .spotify-nav a:first-child i {
   font-size: 62px;
-  color: white;
+  color: #fff
 }
+
 .spotify-nav .spotify-logo {
   display: flex;
   align-items: center;
-  justify-content: center;
-
-}
-.spotify-nav a:last-child i {
-  font-size: 4px;
-  color: white;
-  transform: translate(-5px, -8.5px);
+  justify-content: center
 }
 
 .spotify-option {
   display: flex;
-  gap: 30px;
+  gap: 30px
 }
+
 .spotify-option .close {
-  cursor: pointer;
+  cursor: pointer
 }
+
 .button-bg {
   display: flex;
   align-content: center;
   justify-content: center;
   background-color: #101010;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: #00000080;
   border-radius: 50%;
   width: 100px;
-  height: 100px;
+  height: 100px
 }
+
 .spotify-option button {
   background: none;
-  color: white;
+  color: #fff;
   font-size: 52px;
   border: none;
   margin: 0;
@@ -158,17 +129,20 @@ body .container {
   align-items: center;
   vertical-align: middle;
   width: -webkit-fill-available;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent
 }
+
 .spotify-option button i {
-  vertical-align: middle;
+  vertical-align: middle
 }
+
 .spotify-option #volume-off {
   display: none;
-  transform: translateX(-19px);
+  transform: translateX(-19px)
 }
+
 .spotify-option #play {
-  display: none;
+  display: none
 }
 
 main {
@@ -181,174 +155,13 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-}
-main[data-status="1"] {
-  pointer-events: none;
-  background: #070707;
-}
-main[data-status="1"] .shape-1 {
-  position: absolute;
-  clip-path: polygon(50% 0, 45% 20%, 25% 0, 30% 25%, 0 0, 23% 32%, 0 25%, 20% 45%, 0 50%, 20% 55%, 0 75%, 23% 69%, 0 100%, 30% 76%, 25% 100%, 45% 80%, 49% 99%, 55% 80%, 75% 100%, 70% 78%, 100% 100%, 76% 69%, 100% 75%, 80% 55%, 100% 50%, 80% 45%, 100% 25%, 78% 33%, 100% 0, 70% 26%, 75% 0, 55% 20%);
-  width: 70%;
-  height: 40%;
-  background: #6901b8;
-  animation: expand 2s forwards;
-}
-main[data-status="1"] .shape-2 {
-  clip-path: polygon(20% 33%, 20% 22%, 0 50%, 19% 77%, 20% 67%, 50% 94%, 80% 67%, 80% 77%, 100% 50%, 80% 22%, 80% 33%, 50% 4%);
-  background: #f774c2;
-  width: 50%;
-  height: 30%;
-  transform: scale(0);
-  animation: expand 2s 0.24s forwards;
-}
-main[data-status="1"] .shape-3 {
-  clip-path: path("M105 80.9997C221.5 52.9998 105 -64.5002 79 52.9996C47.5 -66.5002 -59 52.9999 47.5 80.9995C-60 113.5 47.5 209.5 79 113.5C105 209.5 219.5 113.5 105 80.9997Z");
-  width: 70%;
-  height: 40%;
-  background: #f3ff47;
-  transform: translate(30.5%, 29.5%);
-  scale: 0;
-  animation: scaler 2s 0.56s forwards;
-}
-main[data-status="1"] .shape-4 {
-  clip-path: polygon(50% 0, 45% 20%, 25% 0, 30% 25%, 0 0, 23% 32%, 0 25%, 20% 45%, 0 50%, 20% 55%, 0 75%, 23% 69%, 0 100%, 30% 76%, 25% 100%, 45% 80%, 49% 99%, 55% 80%, 75% 100%, 70% 78%, 100% 100%, 76% 69%, 100% 75%, 80% 55%, 100% 50%, 80% 45%, 100% 25%, 78% 33%, 100% 0, 70% 26%, 75% 0, 55% 20%);
-  width: 70%;
-  height: 40%;
-  background: #f774c2;
-  transform: scale(0);
-  animation: expand 4s 1s forwards;
-}
-main[data-status="1"] .shape-5 {
-  clip-path: path("M207.5 2C182.5 34.7372 119.5 51.3577 79 2C79 61.4307 60.5 95.1752 2 95.1752C47.5 142.015 19.3927 179.117 2 201.445C56.5 201.445 79 237 79 278C121.5 236 182.5 245.5 207.5 278C207.5 215 250 201.445 295 201.445C254.175 163.974 277.99 114.985 295 95.1752C228 95.1752 207.5 65 207.5 2Z");
-  width: 70%;
-  height: 40%;
-  background: #070707;
-  transform: translate(14.5%, 13.5%);
-  scale: 0;
-  animation: scaler 4s 1.2s forwards;
-}
-main[data-status="1"] .shape-6 {
-  background-image: radial-gradient(ellipse, #f3ff47 0%, #f3ff47 30%, transparent 33%);
-  background-size: 1rem 1rem;
-  background-repeat: repeat;
-  width: calc(5 * 1rem);
-  height: calc(5 * 1rem);
-  transform: scale(0);
-  animation: expand 2s 1.3s forwards;
-}
-main[data-status="1"] .shape-7 {
-  clip-path: path("M202.637 52.2571C234.767 -12.282 84.169 -19.7865 105.795 52.2571C48.9498 1 -15.3098 111.002 48.9497 121.508C-23.3423 121.508 -6.04164 232.975 48.9497 216.911C-15.3098 245.983 68.5561 325.512 105.795 270.599C90.9657 327.134 213.141 327.134 202.637 270.599C247.503 325.512 329.811 243.482 265.552 216.911C329.811 232.975 340.933 110.001 265.552 121.508C336.608 102.997 266.897 -9.50978 202.637 52.2571Z");
-  width: 100%;
-  height: 100%;
-  background: #11d760;
-  transform: translate(22.2%, 33%);
-  scale: 0;
-  animation: scaler 6s 1.5s forwards;
-}
-main[data-status="1"] .shape-8 {
-  clip-path: polygon(32% 0, 38% 11%, 9% 1%, 24% 13%, 0 19%, 18% 23%, 0 38%, 16% 36%, 0 57%, 16% 49%, 0 73%, 17% 65%, 1% 88%, 15% 80%, 19% 100%, 23% 86%, 40% 100%, 37% 89%, 37% 89%, 56% 100%, 54% 88%, 73% 100%, 67% 87%, 89% 96%, 83% 84%, 100% 70%, 86% 70%, 100% 51%, 87% 54%, 100% 31%, 88% 35%, 95% 7%, 84% 19%, 71% 0, 73% 13%, 50% 0, 55% 11%);
-  width: 50%;
-  height: 30%;
-  transform: scale(0);
-  background: #f774c2;
-  animation: expand 6s 1.8s forwards;
-}
-main[data-status="1"] .shape-9 {
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  width: 50%;
-  height: 30%;
-  transform: scale(0);
-  background: #ff8b1e;
-  animation: expand 8s 1.8s forwards;
-}
-main[data-status="1"] .shape-10 {
-  clip-path: path("M55.5 2C76.3 38.8 28.5 17.3333 2 2C34 69.2 15.3333 69.6667 2 61.5C37.2 112.7 16.6667 125.167 2 125C34 127.4 15.3333 169.333 2 190C32 170.8 14.5 217.333 2 243C60.8 210.2 69.5 229.333 66.5 243C110.9 210.6 126 229.5 128 243C133.2 213 172.833 230.5 192 243C174.4 208.6 221 228.667 246.5 243C215.3 178.2 233.5 175.333 246.5 182C211.7 136.4 232 120.667 246.5 118.5C215.7 114.5 233.667 72.8333 246.5 52.5C213.3 73.7 232.667 27.6667 246.5 2C183.7 36.8 178.333 16.5 183.5 2C134.7 36.8 121.833 16.5 121.5 2C116.3 34.4 75.3333 15.5 55.5 2Z");
-  width: 100%;
-  height: 100%;
-  background: #6901b8;
-  transform: translate(29%, 37%);
-  scale: 0;
-  animation: scaler 8.9s 1.8s forwards;
-}
-main[data-status="1"] .shape-11 {
-  background-image: radial-gradient(ellipse, #f3ff47 0%, #f3ff47 30%, transparent 33%);
-  background-size: 1rem 1rem;
-  background-repeat: repeat;
-  width: calc(5 * 1rem);
-  height: calc(5 * 1rem);
-  transform: scale(0);
-  animation: expandCircle 6s 2s forwards;
-}
-main[data-status="1"] .shape-12 {
-  clip-path: path("M 45 90 c -1.065 0 -2.067 -0.415 -2.821 -1.169 L 38.2 84.852 c -0.571 -0.57 -1.42 -0.74 -2.167 -0.431 l -5.2 2.153 c -0.985 0.407 -2.069 0.407 -3.053 0 c -0.985 -0.407 -1.751 -1.174 -2.159 -2.158 l -2.154 -5.2 c -0.309 -0.746 -1.031 -1.228 -1.838 -1.228 h -5.628 c -2.2 0 -3.989 -1.79 -3.989 -3.989 v -5.628 c 0 -0.808 -0.482 -1.528 -1.228 -1.838 l -5.2 -2.153 c -2.032 -0.842 -3 -3.18 -2.159 -5.212 l 2.154 -5.2 c 0.309 -0.746 0.14 -1.597 -0.431 -2.167 l -3.979 -3.98 C 0.415 47.067 0 46.065 0 45 s 0.415 -2.067 1.168 -2.821 L 5.148 38.2 c 0.571 -0.571 0.74 -1.422 0.431 -2.167 l -2.154 -5.2 c -0.842 -2.033 0.127 -4.371 2.159 -5.212 l 5.199 -2.154 c 0.746 -0.309 1.228 -1.03 1.228 -1.838 v -5.628 c 0 -2.2 1.79 -3.989 3.989 -3.989 h 5.628 c 0.808 0 1.529 -0.482 1.838 -1.228 l 2.154 -5.199 c 0.407 -0.984 1.174 -1.751 2.159 -2.159 c 0.984 -0.408 2.068 -0.408 3.053 0 l 5.2 2.153 c 0.745 0.31 1.597 0.139 2.167 -0.431 l 3.979 -3.979 c 1.507 -1.507 4.135 -1.507 5.641 0 L 51.8 5.148 c 0.57 0.57 1.422 0.74 2.168 0.431 l 5.199 -2.153 c 0.983 -0.407 2.068 -0.408 3.054 0 c 0.984 0.408 1.751 1.174 2.159 2.159 l 2.153 5.199 c 0.31 0.746 1.03 1.228 1.838 1.228 h 5.628 c 2.199 0 3.989 1.79 3.989 3.989 v 5.628 c 0 0.807 0.481 1.529 1.228 1.838 l 5.2 2.154 c 0.984 0.407 1.751 1.174 2.158 2.159 c 0.408 0.984 0.408 2.069 0 3.053 l -2.153 5.2 c -0.31 0.746 -0.14 1.596 0.431 2.167 l 3.979 3.979 C 89.585 42.933 90 43.935 90 45 s -0.415 2.067 -1.169 2.82 l -3.979 3.98 c -0.57 0.57 -0.739 1.421 -0.431 2.167 l 2.153 5.2 c 0.408 0.984 0.408 2.068 0 3.053 c -0.407 0.984 -1.174 1.751 -2.158 2.159 l -5.2 2.153 c -0.746 0.31 -1.228 1.03 -1.228 1.838 v 5.628 c 0 2.199 -1.79 3.989 -3.989 3.989 h -5.628 c -0.808 0 -1.528 0.481 -1.838 1.228 l -2.153 5.2 c -0.408 0.984 -1.175 1.751 -2.159 2.159 c -0.985 0.407 -2.07 0.406 -3.054 -0.001 l -5.199 -2.153 c -0.746 -0.31 -1.597 -0.138 -2.168 0.431 l -3.979 3.979 C 47.067 89.585 46.065 90 45 90 z");
-  width: 16%;
-  height: 10%;
-  transform: translate(2%, 2%);
-  scale: 0;
-  background: #ff8b1e;
-  animation: expandPointy 7s 2s forwards, PointyRotate 20s 7.6s linear;
-}
-@keyframes expand {
-  100% {
-    transform: scale(12);
-  }
-}
-@keyframes expandCircle {
-  100% {
-    transform: scale(7);
-  }
-}
-@keyframes expandPointy {
-  100% {
-    scale: 5;
-  }
-}
-@keyframes PointyRotate {
-  0% {
-    scale: 5;
-  }
-  25% {
-    transform: rotateZ(180deg);
-    transform-origin: 49%;
-    scale: 5;
-  }
-  50% {
-    transform: rotateZ(360deg);
-    transform-origin: 49%;
-    scale: 5;
-  }
-  75% {
-    transform: rotateZ(540deg);
-    transform-origin: 49%;
-    scale: 5;
-  }
-  100% {
-    transform: rotateZ(720deg);
-    transform-origin: 49%;
-    scale: 5;
-  }
-}
-@keyframes scaler {
-  100% {
-    scale: 12;
-  }
-}
-@keyframes expandText {
-  80% {
-    opacity: 0;
-  }
-  100% {
-    transform: scale(2.8);
-    opacity: 1;
-  }
+  overflow: hidden
 }
 
 .touch_canvas {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100%
 }
 
 h1 {
@@ -356,7 +169,7 @@ h1 {
   font-weight: bolder;
   text-align: center;
   margin: 5%;
-  word-spacing: -0.075em;
+  word-spacing: -.075em
 }
 
 h2 {
@@ -364,15 +177,15 @@ h2 {
   font-weight: bolder;
   text-align: center;
   margin: 5%;
-  word-spacing: -0.075em;
+  word-spacing: -.075em
 }
 
 h3 {
   font-size: xxx-large;
-  font-weight: normal;
+  font-weight: 400;
   vertical-align: bottom;
   text-align: center;
-  margin: 5%;
+  margin: 5%
 }
 
 p {
@@ -380,29 +193,28 @@ p {
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  font-size: xx-large;
+  font-size: xx-large
 }
+
 p img {
   height: 50px;
-  margin: 0 10px;
+  margin: 0 10px
 }
 
 .no_pwa button {
   margin-top: 5%;
   font-size: 25px;
   width: 50%;
-  transform: translateX(50%);
+  transform: translateX(50%)
 }
 
 .status-bar-container {
   display: flex;
   width: 95%;
-  height: 0.25vh;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 3%;
-  margin-bottom: 3%;;
+  height: .25vh;
+  margin: 3% auto
 }
+
 .status-bar {
   flex-grow: 1;
   height: 100%;
@@ -412,26 +224,26 @@ p img {
   transition: width 2s;
   border-radius: 3px;
   margin-left: .5%;
-  margin-right: .5%;
+  margin-right: .5%
 }
 
 .status-bar-progress {
-  width: 0%; /* Starts without width, so it's hidden */
+  width: 0;
   height: 100%;
-  background-color: #ffffff;
-  border-radius: 3px;
+  background-color: #fff;
+  border-radius: 3px
 }
 
 .cover_img {
-  width: 75%;
+  width: 75%
 }
 
 .cover_video {
-  border-radius: 50px;
+  border-radius: 50px
 }
 
 .cover_img_hidden {
-  display: none;
+  display: none
 }
 
 .bg_video {
@@ -442,21 +254,22 @@ p img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
+  z-index: -1
 }
 
 .fa-spotify {
-  margin-right: 20px;
+  margin-right: 20px
 }
 
-.fa-pause .fa-play {
+.fa-play {
   font-size: 95%;
 }
 
-.fa-volume-high, .fa-volume-off {
-  font-size: 85%;
+.fa-volume-high,
+.fa-volume-off {
+  font-size: 85%
 }
 
 .fa-xmark {
-  font-size: 110%;
+  font-size: 110%
 }

@@ -203,7 +203,6 @@ async function slides() {
     img = document.getElementsByTagName("img")[0]; // Reset img
 
     if (isAnimPlaying) {
-      console.log(currentAnim)
       currentAnim.pause();
     }
     
@@ -230,6 +229,7 @@ async function slides() {
 
     if (slide.text != null) {
       header.innerHTML = slide.text;
+      header.id = "header"
 
       if (slide.animation == null) {
         slide.animation = "normal";
@@ -239,14 +239,24 @@ async function slides() {
         animTargets += ', #subtitle';
       }
 
-      currentAnim = animations[slide.animation];     
+      if (slide.header_style != null) {
+        header.style = slide.style;
+      }
+
+      currentAnim = animations[slide.animation];
     } else {
       header.innerHTML = "<h2></h2>"
+      header.id = "header"
     }
       
     if (slide.sub != null) {
       sub.innerHTML = slide.sub;
       sub.style.position = ''
+
+      if (slide.sub_style != null) {
+        sub.style = slide.sub_style;
+      }
+
     } else {
       sub.innerHTML = ""
       sub.style.position = 'absolute'
@@ -265,7 +275,6 @@ async function slides() {
         img.className = "cover_img"
       }
       img.src = slide.img;
-      console.log(img.tagName)
     } else {
       document.getElementsByClassName("cover_video")[0].className = "cover_video cover_img_hidden"
       img.className = "cover_img_hidden"
@@ -288,14 +297,6 @@ async function slides() {
 
     currentSleep = new Sleep();
     await currentSleep.start(slide.time * 1000, bar, bar.maxWidth);
-  }
-}
-
-function dataStatusFunc() {
-  for (let i = 0; i < 30; i++) {
-    let shape = document.createElement("div");
-    shape.setAttribute("class", `shape-${i}`);
-    main.appendChild(shape);
   }
 }
 
