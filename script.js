@@ -1,8 +1,4 @@
 var animations;
-import('./public/animations.js').then(module => {
-  animations = module.animations;
-});
-
 let slide_data;
 var bg;
 
@@ -337,7 +333,10 @@ if (isStandalone) {
       document.getElementsByClassName("container")[0].style.display = "";
       localStorage.clear();
 
-      slides();
+      import('./public/animations.js').then(module => {
+        animations = module.animations;
+        slides();
+      });
     })
     .catch(error => console.error('Error:', error));
 } else {
