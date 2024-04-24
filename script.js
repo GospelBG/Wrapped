@@ -187,6 +187,11 @@ async function slides() {
   var img = document.getElementsByTagName("img")[0];
 
   for (var i = 1; i <= Object.keys(slide_data).length + 1; i = i + slide_change) {
+    if (slide_data[i-slide_change] && slide_data[i-slide_change].img_type == "video") { // Reset video from previous slide
+      img.pause();
+      img.currentTime = 0;
+    }
+
     if (i >= Object.keys(slide_data).length + 1 && slide_change == 1) {
       for (let j = 1; j <= Object.keys(slide_data).length; j++) {
         currentSleep.cancel(); // Cancel current sleep to avoid bar animation
