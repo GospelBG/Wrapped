@@ -32,6 +32,56 @@ export let animations = {
       window.isAnimPlaying = false;
     }
   }),
+  "sub_change":anime.timeline({
+    autoplay: false
+  })
+  .add({
+    begin: function() {
+      window.isAnimPlaying = true;
+    },
+    targets: '#subtitle',
+    easing: 'cubicBezier(0.3, 0.75, 0.5, 1)',
+    translateY: [75, 0],
+    opacity: [0, 1],
+    scale: [1, 1],
+    duration: 250,
+  }).add({
+    easing: 'linear',
+    targets: '#img',
+    translateY: [0, 0],
+    opacity: [0, 1],
+    delay: 0,
+    offset: 0,
+    duration: 150,
+    complete: function() {
+      window.isAnimPlaying = false;
+    }
+  
+  }),
+  "sub_change_out": anime.timeline({
+    autoplay: false
+  })
+  .add({
+    begin: function() {
+      window.isAnimPlaying = true;
+    },
+    easing: 'cubicBezier(0.3, 0.75, 0.5, 1)',
+    targets: '#subtitle',
+    translateY: [0, -75],
+    opacity: [1, 0],
+    duration: 250,
+  }).add({
+    easing: 'linear',
+    targets: '#img',
+    translateY: [0, 0],
+    opacity: [1, 0],
+    delay: 0,
+    offset: 0,
+    duration: 150,
+    complete: function() {
+      window.isAnimPlaying = false;
+    }
+  }),
   "intro" : anime.timeline({
     autoplay: false,
     easing: 'linear',
