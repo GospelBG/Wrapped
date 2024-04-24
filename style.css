@@ -152,8 +152,8 @@ body .container {
   background: none;
   color: white;
   font-size: 52px;
-  margin: 0 10px 0 10px;
   border: none;
+  margin: 0;
   cursor: pointer;
   align-items: center;
   vertical-align: middle;
