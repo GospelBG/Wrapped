@@ -1,3 +1,15 @@
+:root {
+  --wrapper-width: calc(9/16*100vh);
+  --wrapper-height: 100vh;
+}
+
+@media (max-aspect-ratio: 9/19.5) {
+  :root {
+    --wrapper-width: 100vw;
+    --wrapper-height: calc(19.5/9*100vw);
+  }
+}
+
 html {
   overflow: hidden;
   font-family: Metropolis;
@@ -18,10 +30,10 @@ html:focus-within {
   scroll-behavior: smooth
 }
 
-body {
-  min-height: 100vh;
-  text-rendering: optimizeSpeed;
-  line-height: 1.5
+.wrapper {
+  display: block;
+  width: var(--wrapper-width);
+  height: var(--wrapper-height);
 }
 
 a:not([class]) {
@@ -31,10 +43,6 @@ a:not([class]) {
 img {
   max-width: 100%;
   display: block
-}
-
-button {
-  font: inherit
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -56,9 +64,12 @@ body {
   background: #101010;
   display: flex;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   justify-content: center;
-  align-items: center
+  align-items: center;
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5
 }
 
 body .container {
@@ -74,34 +85,37 @@ body .container {
 
 .spotify-nav {
   display: flex;
-  margin-left: 38px;
-  margin-right: 38px;
-  margin-top: 2px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 1%;
   justify-content: space-between
 }
 
 .spotify-nav p {
   text-decoration: none;
-  font-size: 38px;
+  font-size: calc(var(--wrapper-width)*0.05);
   font-weight: 600;
   cursor: pointer;
   color: #fff
 }
 
 .spotify-nav a:first-child i {
-  font-size: 62px;
+  font-size: calc(var(--wrapper-width)*0.075);
   color: #fff
 }
 
 .spotify-nav .spotify-logo {
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
+  gap: 7%
 }
 
 .spotify-option {
   display: flex;
-  gap: 30px
+  gap: 5%;
+  width: 45%;
+  justify-content: right
 }
 
 .spotify-option .close {
@@ -115,20 +129,21 @@ body .container {
   background-color: #101010;
   background-color: #00000080;
   border-radius: 50%;
-  width: 100px;
-  height: 100px
 }
 
 .spotify-option button {
   background: none;
   color: #fff;
-  font-size: 52px;
+  font-size: calc(var(--wrapper-width)*0.05);
+  justify-content: right;
   border: none;
   margin: 0;
   cursor: pointer;
   align-items: center;
   vertical-align: middle;
-  width: -webkit-fill-available;
+  width: calc(var(--wrapper-width) * 0.1);
+  height: calc(var(--wrapper-width) * 0.1);
+
   -webkit-tap-highlight-color: transparent
 }
 
@@ -165,7 +180,7 @@ main {
 }
 
 h1 {
-  font-size: 5vw;
+  font-size: 2.5em;
   font-weight: bolder;
   text-align: center;
   margin: 5%;
@@ -173,7 +188,7 @@ h1 {
 }
 
 h2 {
-  font-size: xxxx-large;
+  font-size: calc(var(--wrapper-width)*0.15);
   font-weight: bolder;
   text-align: center;
   margin: 5%;
@@ -181,7 +196,7 @@ h2 {
 }
 
 h3 {
-  font-size: xxx-large;
+  font-size: calc(var(--wrapper-width)*0.075);
   font-weight: 400;
   vertical-align: bottom;
   text-align: center;
@@ -192,8 +207,9 @@ p {
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  align-items: center;
-  font-size: xx-large
+  text-align: center;
+  font-size: 2em
+
 }
 
 p img {
@@ -203,7 +219,7 @@ p img {
 
 .no_pwa button {
   margin-top: 5%;
-  font-size: 30px;
+  font-size: 1.5em;
   width: 50%;
   transform: translateX(50%)
 }
@@ -255,10 +271,6 @@ p img {
   height: 100%;
   object-fit: cover;
   z-index: -1
-}
-
-.fa-spotify {
-  margin-right: 20px
 }
 
 .fa-play {

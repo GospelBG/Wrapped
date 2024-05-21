@@ -29,53 +29,55 @@
     <link rel="preload" href="./public/media/*" as="image">
   </head>
   <body>
-  <div class="container" style="display: none;">
-    <div class="status-bar-container"></div>
-    <div class="spotify-nav">
-      <div class="spotify-logo">
-        <a href="#">
-          <i class="fa-brands fa-spotify"></i>
-        </a>
-        <p>Spotify</p>
-      </div>
-
-      <div class="spotify-option">
-        <div class="button-bg">
-          <button type="button"> <!-- TODO: Both beign clicked at the same time (both onclick methods called) -->
-            <i class="fa-solid fa-pause" id="pause" onclick="currentSleep.pause()"></i>
-            <i class="fa-solid fa-play" id="play" onclick="currentSleep.resume()"></i>
-          </button>
+    <div class="wrapper">
+      <div class="container" style="display: none;">
+        <div class="status-bar-container"></div>
+        <div class="spotify-nav">
+          <div class="spotify-logo">
+            <a href="#">
+              <i class="fa-brands fa-spotify"></i>
+            </a>
+            <p>Spotify</p>
+          </div>
+    
+          <div class="spotify-option">
+            <div class="button-bg">
+              <button type="button"> <!-- TODO: Both beign clicked at the same time (both onclick methods called) -->
+                <i class="fa-solid fa-pause" id="pause" onclick="currentSleep.pause()"></i>
+                <i class="fa-solid fa-play" id="play" onclick="currentSleep.resume()"></i>
+              </button>
+            </div>
+            <div class="button-bg">
+              <button type="button">
+                <i class="fa-solid fa-volume-high" id="volume-on" onclick="volumeOn()"></i>
+                <i class="fa-solid fa-volume-off" id="volume-off" onclick="volumeOff()"></i>
+              </button>
+            </div>
+            <div class="button-bg">
+              <button type="button" class="close" onclick="closeSelf()">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="button-bg">
-          <button type="button">
-            <i class="fa-solid fa-volume-high" id="volume-on" onclick="volumeOn()"></i>
-            <i class="fa-solid fa-volume-off" id="volume-off" onclick="volumeOff()"></i>
-          </button>
-        </div>
-        <div class="button-bg">
-          <button type="button" class="close" onclick="closeSelf()">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
+    
+        <main data-status="1" data-long-press-delay="250" ontouchend="currentSleep.resume()">
+          <img class="cover_img" id="img" src="">
+          <h2 id="header"></h2>
+          <h3 id="subtitle"></h3>
+          <video webkit-playsinline playsinline class="cover_img_hidden cover_video" id="img" src=""></video>
+          <canvas class="touch_canvas" id="touch"></canvas>
+          <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Intro" src="./public/bg/Intro.mp4"></video>
+          <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Night" src="./public/bg/Night.mp4"></video>
+          <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_PlanetVerse" src="./public/bg/PlanetVerse.mp4"></video>
+          <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Sunrise" src="./public/bg/Sunrise.mp4"></video>
+          <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Sunset" src="./public/bg/Sunset.mp4"></video>
+          <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Title1" src="./public/bg/Title1.mp4"></video>
+          <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Title2" src="./public/bg/Title2.mp4"></video>
+          <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Title3" src="./public/bg/Title3.mp4"></video>
+        </main>
       </div>
     </div>
-
-    <main data-status="1" data-long-press-delay="250" ontouchend="currentSleep.resume()">
-      <img class="cover_img" id="img" src="">
-      <h2 id="header"></h2>
-      <h3 id="subtitle"></h3>
-      <video webkit-playsinline playsinline class="cover_img_hidden cover_video" id="img" src=""></video>
-      <canvas class="touch_canvas" id="touch"></canvas>
-      <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Intro" src="./public/bg/Intro.mp4"></video>
-      <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Night" src="./public/bg/Night.mp4"></video>
-      <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_PlanetVerse" src="./public/bg/PlanetVerse.mp4"></video>
-      <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Sunrise" src="./public/bg/Sunrise.mp4"></video>
-      <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Sunset" src="./public/bg/Sunset.mp4"></video>
-      <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Title1" src="./public/bg/Title1.mp4"></video>
-      <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Title2" src="./public/bg/Title2.mp4"></video>
-      <video rel="preload" muted webkit-playsinline playsinline class="bg_video bg_Title3" src="./public/bg/Title3.mp4"></video>
-    </main>
-  </div>
 
   <div class="no_pwa">
       <h1>For better experience you may want to use this website as a Web App</h1>
