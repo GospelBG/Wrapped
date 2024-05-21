@@ -188,7 +188,7 @@ h1 {
 }
 
 h2 {
-  font-size: calc(var(--wrapper-width)*0.15);
+  font-size: calc(var(--wrapper-width)*0.1);
   font-weight: bolder;
   text-align: center;
   margin: 5%;
@@ -196,7 +196,7 @@ h2 {
 }
 
 h3 {
-  font-size: calc(var(--wrapper-width)*0.075);
+  font-size: calc(var(--wrapper-width)*0.05);
   font-weight: 400;
   vertical-align: bottom;
   text-align: center;
