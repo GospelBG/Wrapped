@@ -3,6 +3,7 @@ let slide_data;
 var bg;
 
 var shouldIgnoreTap = false;
+var shouldAdvertiseWebapp = false;
 
 function chooseSide(e) {
   if (shouldIgnoreTap) {
@@ -307,7 +308,7 @@ document.getElementsByTagName("main")[0].addEventListener('long-press', (e) => {
 });
 
 var isStandalone = false;
-if ((("standalone" in window.navigator) && window.navigator.standalone) || localStorage.getItem("override_pwa") == "true") {
+if (!shouldAdvertiseWebapp || (("standalone" in window.navigator) && window.navigator.standalone) || localStorage.getItem("override_pwa") == "true") {
   isStandalone = true;
   document.body.removeChild(document.getElementsByClassName("no_pwa")[0]);
 
@@ -346,6 +347,6 @@ if (isStandalone) {
     .catch(error => console.error('Error:', error));
 } else {
   console.log("Not in standalone mode");
-  document.body.removeChild(document.getElementsByClassName("container")[0]);
+  document.body.removeChild(document.getElementsByClassName("wrapper")[0]);
 }
 
